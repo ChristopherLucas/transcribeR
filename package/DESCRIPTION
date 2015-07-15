@@ -6,4 +6,5 @@ Title: Automated Trancription of Audio Files Through the HP IDOL API
 Author: Dean Knox, Christopher Lucas, Thomas Scanlon, Shiv Sunil, Dustin Tingley
 Maintainer: Christopher Lucas <clucas@fas.harvard.edu>
 Description: Transcribes audio to text with the HP IDOL API
+Imports: httr
 License: GPL-3
