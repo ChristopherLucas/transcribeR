@@ -1,5 +1,5 @@
 sendAudio <- function(wav.file, api.key, interval = "-1",
-                      encode = "multipart", asynchronous = TRUE) {
+                      encode = "multipart", asynchronous = TRUE){
     # Main user function to POST to HP IDOL Speech Recognition
     # API.
     #    
@@ -27,3 +27,4 @@ sendAudio <- function(wav.file, api.key, interval = "-1",
     stop_for_status(attempt)
     out <- content(attempt)
     return(out)
+}
