@@ -1,2 +1,2 @@
 library(devtools)
-install_github('ChristopherLucas/transcribeR
+install_github('ChristopherLucas/transcribeR/package')
