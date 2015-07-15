@@ -33,15 +33,23 @@ sendAudio <- function(wav.dir, api.key, interval = "-1",
     }
     if(file.exists(job.file)){
         existing.job.csv <- read.csv(job.file)
-        
+        stop(colnames(existing.job.csv)[2:4] != c("NAMES","jobIDs","lang")){
+            print("This doesn't appear to be a transcribeR jobs.csv, please provide another filename")
+        }        
+        NAMES <- names(out.list)
+        jobIDs <- unname(unlist(lapply(out.list, function(x) x[['jobID']])))
+        lang <- rep(language, length(out.list))
+        df <- data.frame(NAMES, jobIDs, lang)
+        df <- rbind(existing.jobs.csv, df)
+        write.csv(df, job.file, row.names = FALSE)
     } else {
         NAMES <- names(out.list)
         jobIDs <- unname(unlist(lapply(out.list, function(x) x[['jobID']])))
         lang <- rep(language, length(out.list))
         df <- data.frame(NAMES, jobIDs, lang)
-        write.csv(df, job.file)
+        write.csv(df, job.file, row.names = FALSE)
     }
     if(is.null(error.messages)){
-        print(paste("Jobs successfully uploaded,", "'jobs.csv' written at", job.file))
+        print(paste("Jobs successfully uploaded,", "'job.file' written to", job.file))
     }
 }
