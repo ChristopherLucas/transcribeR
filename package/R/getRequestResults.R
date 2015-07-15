@@ -7,8 +7,9 @@ getRequestResults <- function(jobId, api.key){
     #    
     # Returns:
     #   Nothing
-    hpidolurl.result <- "http://api.idolondemand.com/1/job/result/"
-    get.url <- paste( hpidolurl.result, jobId, "?apikey=", api.key, sep = "")
-    call.results = readLines(get.url, n = -1L, ok = TRUE, warn = FALSE)
-    return(content(call.results))
+    url <- "http://api.idolondemand.com/1/job/result/"
+    get.url <- paste(url, jobId, "?apikey=", api.key, sep = "")
+    call.results = content(GET(get.url))
+    out.text <- call.results$actions[[1]]$result[[1]][[1]][[1]]
+    return(out.text)
 }
