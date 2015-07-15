@@ -21,10 +21,11 @@ sendAudio <- function(wav.dir, api.key, interval = "-1",
             url,
             body = list(
                 file = upload_file(fn),
-                apikey = api.key
+                apikey = api.key,
+                language = language,
+                interval = interval
                 ),
-            encode = encode,
-            verbose())
+            encode = encode)
         stop_for_status(attempt)
         name.in.list <- sub("(.*\\/)([^.]+)(\\.[[:alnum:]]+$)", "\\2", fn)
         out.list[[name.in.list]] <- content(attempt)
