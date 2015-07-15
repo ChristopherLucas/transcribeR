@@ -39,7 +39,7 @@ sendAudio <- function(wav.dir, api.key, interval = "-1",
         jobIDs <- unname(unlist(lapply(out.list, function(x) x[['jobID']])))
         lang <- rep(language, length(out.list))
         df <- data.frame(NAMES, jobIDs, lang)
-        write.csv(job.file, df)
+        write.csv(df, job.file)
     }
     if(is.null(error.messages)){
         print(paste("Jobs successfully uploaded,", "'jobs.csv' written at", job.file))
