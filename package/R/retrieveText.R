@@ -7,11 +7,13 @@ retrieveText <- function(job.file, api.key) {
     #    
     # Returns:
     #   Nothing
-    job.IDs <- read.csv(job.file)$Ids
+    jobs <- read.csv(job.file)
+    job.IDs <- jobs$jobIDs
     transcribed.text <- c()
     for(ID in job.IDS){
         result <- getRequestResults(ID, callkey = api.key)
         transcribed.text <- c(transcribed.text, result)
     }
-    return(list(job.IDs = job.IDs, transcribed.text))
+    jobs$transcribed.text <- transcribed.text
+    return(jobs)
 }
