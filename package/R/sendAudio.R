@@ -12,6 +12,7 @@ sendAudio <- function(wav.dir, api.key, interval = "-1",
     #    
     # Returns:
     #   Nothing
+    error.messages <- NULL
     url <- "https://api.idolondemand.com/1/api/async/recognizespeech/v1"
     wav.dir <- gsub('/?$', '/', wav.dir) # add trailing '/' if missing
     wav.filenames <- Sys.glob(paste(wav.dir,'*.wav', sep = ''))
@@ -30,5 +31,17 @@ sendAudio <- function(wav.dir, api.key, interval = "-1",
         name.in.list <- sub("(.*\\/)([^.]+)(\\.[[:alnum:]]+$)", "\\2", fn)
         out.list[[name.in.list]] <- content(attempt)
     }
-    return(out.list)
+    if(file.exists(job.file)){
+        existing.job.csv <- read.csv(job.file)
+        
+    } else {
+        NAMES <- names(out.list)
+        jobIDs <- unname(unlist(lapply(out.list, function(x) x[['jobID']])))
+        lang <- rep(language, length(out.list))
+        df <- data.frame(NAMES, jobIDS, lang)
+        write.csv(job.file, df)
+    }
+    if(is.null(error.messages)){
+        print(paste("Jobs successfully uploaded,", "'jobs.csv' written at", job.file))
+    }
 }
