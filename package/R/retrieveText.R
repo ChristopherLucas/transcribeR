@@ -12,7 +12,8 @@ retrieveText <- function(job.file, api.key) {
     transcribed.text <- c()
     for(ID in job.IDs){
         result <- getRequestResults(ID, api.key = api.key)
-        transcribed.text <- c(transcribed.text, result)
+        print(result)
+        transcribed.text <- c(transcribed.text, result)        
     }
     jobs$transcribed.text <- transcribed.text
     return(jobs)
