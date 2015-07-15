@@ -1,0 +1,9 @@
+Package: transcribeR
+Version: 0.0.0
+Date: 2015-07-15
+Type: Package
+Title: Automated Trancription of Audio Files Through the HP IDOL API
+Author: Dean Knox, Christopher Lucas, Thomas Scanlon, Shiv Sunil, Dustin Tingley
+Maintainer: Christopher Lucas <clucas@fas.harvard.edu>
+Description: Transcribes audio to text with the HP IDOL API
+License: GPL-3

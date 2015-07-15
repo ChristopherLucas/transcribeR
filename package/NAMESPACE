@@ -1,0 +1,5 @@
+importFrom("httr",POST,stop_for_status,content)
+export("checkJobs",
+       "retrieveTranscription",
+       "sendTranscription",
+       "writeText")
