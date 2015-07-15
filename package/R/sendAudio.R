@@ -1,7 +1,8 @@
-sendAudio <- function(wav.file, api.key, interval = "-1",
-                      encode = "multipart", asynchronous = TRUE){
+sendAudio <- function(wav.dir, api.key, interval = "-1",
+                      encode = "multipart", job.file,
+                      language = "en-US"){
     # Main user function to POST to HP IDOL Speech Recognition
-    # API.
+    # API and write jobs to job.file (a filename)
     #    
     # Args:
     #   wav.file:
@@ -11,20 +12,22 @@ sendAudio <- function(wav.file, api.key, interval = "-1",
     #    
     # Returns:
     #   Nothing
-    if(asynchronous){
-        url <- "https://api.idolondemand.com/1/api/async/recognizespeech/v1"
-    }else{
-        url <- "https://api.idolondemand.com/1/api/sync/recognizespeech/v1"
+    url <- "https://api.idolondemand.com/1/api/async/recognizespeech/v1"
+    wav.dir <- gsub('/?$', '/', wav.dir) # add trailing '/' if missing
+    wav.filenames <- Sys.glob(paste(wav.dir,'*.wav', sep = ''))
+    out.list <- list()
+    for(fn in wav.filenames){        
+        attempt <- POST(
+            url,
+            body = list(
+                file = upload_file(fn),
+                apikey = api.key
+                ),
+            encode = encode,
+            verbose())
+        stop_for_status(attempt)
+        name.in.list <- sub("(.*\\/)([^.]+)(\\.[[:alnum:]]+$)", "\\2", fn)
+        out.list[[name.in.list]] <- content(attempt)
     }
-    attempt <- POST(
-        url,
-        body = list(
-            file = upload_file(wav.file),
-            apikey = api.key
-            ),
-        encode = encode,
-        verbose())
-    stop_for_status(attempt)
-    out <- content(attempt)
-    return(out)
+    return(out.list)
 }

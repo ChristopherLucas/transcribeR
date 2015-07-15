@@ -1,3 +1,4 @@
 importFrom("httr",POST,stop_for_status,content,verbose,upload_file)
-export("retrieveAsync",
-       "sendAudio")
+export("retrieveText",
+       "sendAudio",
+       "printLanguages")

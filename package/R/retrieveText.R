@@ -1,4 +1,4 @@
-retrieveAsync <- function(job.file, api.key) {
+retrieveText <- function(job.file, api.key) {
     # Function to retrieve asynchronous 
     #    
     # Args:
