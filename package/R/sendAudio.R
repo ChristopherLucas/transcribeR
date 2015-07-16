@@ -16,10 +16,14 @@ sendAudio <- function(wav.dir, api.key, interval = "-1",
     # Returns:
     #   Message indicating success, automatically writes jobs
     #   csv to file.
+    # Improve this - error messages should collect and return
+    # errors in an R-readable way
     error.messages <- NULL
     url <- "https://api.idolondemand.com/1/api/async/recognizespeech/v1"
+    # get all files in wav directory
     wav.dir <- gsub('/?$', '/', wav.dir) # add trailing '/' if missing
     wav.filenames <- Sys.glob(paste(wav.dir,'*.wav', sep = ''))
+    # holder for content
     out.list <- list()
     for(fn in wav.filenames){        
         attempt <- POST(
@@ -34,8 +38,8 @@ sendAudio <- function(wav.dir, api.key, interval = "-1",
         stop_for_status(attempt)
         name.in.list <- sub("(.*\\/)([^.]+)(\\.[[:alnum:]]+$)", "\\2", fn)
         out.list[[name.in.list]] <- content(attempt)
-    }
-    if(file.exists(job.file)){
+    }    
+    if(file.exists(job.file)){ # if the file has already been through, append new rows
         existing.job.csv <- read.csv(job.file)
         if(any(colnames(existing.job.csv) != c("NAMES","jobIDs","lang"))){
             stop("This doesn't appear to be a transcribeR jobs.csv, please provide another filename")
@@ -46,14 +50,14 @@ sendAudio <- function(wav.dir, api.key, interval = "-1",
         df <- data.frame(NAMES, jobIDs, lang, stringsAsFactors=FALSE)
         df <- rbind(existing.job.csv, df)
         write.csv(df, job.file, row.names = FALSE)
-    } else {
+    } else { # else create a new file
         NAMES <- names(out.list)
         jobIDs <- unname(unlist(lapply(out.list, function(x) x[['jobID']])))
         lang <- rep(language, length(out.list))
         df <- data.frame(NAMES, jobIDs, lang, stringsAsFactors=FALSE)
         write.csv(df, job.file, row.names = FALSE)
     }
-    if(is.null(error.messages)){
+    if(is.null(error.messages)){ #this needs to be WAY better
         print(paste("Jobs successfully uploaded,", "'job.file' written to", job.file))
     }
 }
