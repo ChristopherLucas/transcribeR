@@ -20,6 +20,7 @@ retrieveText <- function(job.file, api.key) {
         transcribed.text <- c(transcribed.text, result)
     }
     if('transcribed.text' %in% colnames(jobs)){
+        return(jobs)
         jobs[untranscribed.inds,which(colnames(jobs) == 'transcribed.text')] <- transcribed.text
     } else {
         jobs$transcribed.text <- transcribed.text

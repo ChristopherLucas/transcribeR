@@ -10,6 +10,6 @@ getStatus <- function(jobId, api.key){
     #   Job status (character)
     url <- "http://api.idolondemand.com/1/job/status/"
     get.url <- paste(url, jobId, "?apikey=", api.key, sep = "")
-    status = content(GET(get.url))$status
+    status = as.character(content(GET(get.url))$status)
     return(status)
 }
