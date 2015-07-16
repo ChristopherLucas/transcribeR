@@ -5,13 +5,17 @@ sendAudio <- function(wav.dir, api.key, interval = "-1",
     # API and write jobs to job.file (a filename)
     #    
     # Args:
-    #   wav.file:
-    #   api.key: 
-    #   interval:
-    #   encode:
+    #   wav.dir: Directory that contains wav files. Will
+    #            only try to upload wav files in dir.
+    #   api.key: API key for the HP IDOL API.
+    #   interval: HP API arg.
+    #   encode: HP API arg.
+    #   job.file: CSV file where jobs.csv will be written.
+    #   language: HP API arg.
     #    
     # Returns:
-    #   Nothing
+    #   Message indicating success, automatically writes jobs
+    #   csv to file.
     error.messages <- NULL
     url <- "https://api.idolondemand.com/1/api/async/recognizespeech/v1"
     wav.dir <- gsub('/?$', '/', wav.dir) # add trailing '/' if missing

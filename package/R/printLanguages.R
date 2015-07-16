@@ -1,4 +1,13 @@
 printLanguages <- function(){
+    # Convenience user-facing function to print language
+    # codes for HP API.
+    #    
+    # Args:
+    #   NONE
+    #    
+    # Returns:
+    #   NOTHING. Prints list of supported languages
+    #   and codes. 
     language.codes <- list(
         German   = "de-DE",
         USA      = "en-US",	
