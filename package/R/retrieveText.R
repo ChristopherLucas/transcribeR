@@ -17,10 +17,10 @@ retrieveText <- function(job.file, api.key) {
     transcribed.text <- c()
     for(ID in job.IDs){
         result <- getRequestResults(ID, api.key = api.key)
-        transcribed.text <- c(transcribed.text, result)        
+        transcribed.text <- c(transcribed.text, result)
     }
     if('transcribed.text' %in% colnames(jobs)){
-        jobs[untranscribed.inds,'transcribed.text'] <- transcribed.text
+        jobs[untranscribed.inds,which(colnames(jobs) == 'transcribed.text')] <- transcribed.text
     } else {
         jobs$transcribed.text <- transcribed.text
     }    

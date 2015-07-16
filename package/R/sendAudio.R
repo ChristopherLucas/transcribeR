@@ -43,14 +43,14 @@ sendAudio <- function(wav.dir, api.key, interval = "-1",
         NAMES <- names(out.list)
         jobIDs <- unname(unlist(lapply(out.list, function(x) x[['jobID']])))
         lang <- rep(language, length(out.list))
-        df <- data.frame(NAMES, jobIDs, lang)
+        df <- data.frame(NAMES, jobIDs, lang, stringsAsFactors=FALSE)
         df <- rbind(existing.job.csv, df)
         write.csv(df, job.file, row.names = FALSE)
     } else {
         NAMES <- names(out.list)
         jobIDs <- unname(unlist(lapply(out.list, function(x) x[['jobID']])))
         lang <- rep(language, length(out.list))
-        df <- data.frame(NAMES, jobIDs, lang)
+        df <- data.frame(NAMES, jobIDs, lang, stringsAsFactors=FALSE)
         write.csv(df, job.file, row.names = FALSE)
     }
     if(is.null(error.messages)){
