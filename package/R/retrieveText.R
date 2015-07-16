@@ -8,7 +8,8 @@ retrieveText <- function(job.file, api.key) {
     # Returns:
     #   Nothing
     jobs <- read.csv(job.file)
-    if('transcribed.text' %in% colnames(jobs)){        
+    if('transcribed.text' %in% colnames(jobs)){
+        jobs$transcribed.text <- as.character(jobs$transcribed.text)
         untranscribed.inds <- which(jobs$transcribed.text == 'queued')
         job.IDs <- jobs$jobIDs[untranscribed.inds]
     } else {
