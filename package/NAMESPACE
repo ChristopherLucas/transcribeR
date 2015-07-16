@@ -1,4 +1,5 @@
 importFrom("httr",POST,stop_for_status,content,verbose,upload_file,GET)
 export("retrieveText",
        "sendAudio",
-       "printLanguages")
+       "printLanguages",
+       "writeTranscribedText")
