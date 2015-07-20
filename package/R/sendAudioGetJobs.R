@@ -26,16 +26,16 @@ sendAudioGetJobs <- function(wav.dir, api.key, interval = "-1",
     # holder for content
     out.list <- list()
    
-    file.created <- createJobCSV(job.file)
+    file.created <- createJobCSV(job.file) # Boolean, TRUE if a file is created
     
     if(file.created == FALSE){
       existing.job.csv <- read.csv(job.file)
-      if(any(colnames(existing.job.csv) != ex.v)){
+      if(any(colnames(existing.job.csv) != ex.v)){ # Check if the provided file is correctly formatted
         error.messages <- "incorrect csv type"
         stop("This doesn't appear to be a transcribeR jobs.csv, please provide another filename")
       }
         for(fn in wav.filenames){
-          if(fn %in% existing.job.csv$NAMES){}
+          if(fn %in% existing.job.csv$FILENAME){} #
           else {
             attempt <- POST(
               url,
@@ -52,7 +52,7 @@ sendAudioGetJobs <- function(wav.dir, api.key, interval = "-1",
           }
         }
       }
-      else { # else create a new file
+      else { # a new file was created
         for(fn in wav.filenames){
             attempt <- POST(
               url,
@@ -67,6 +67,7 @@ sendAudioGetJobs <- function(wav.dir, api.key, interval = "-1",
             name.in.list <- sub("(.*\\/)([^.]+)(\\.[[:alnum:]]+$)", "\\2", fn)
             out.list[[name.in.list]] <- content(attempt)
           }
+      }
         DATE <- rep(Sys.Date,length(out.list))
         APIKEY <- rep(api.key,length(out.list))
         FILENAME <- names(out.list)
@@ -75,8 +76,7 @@ sendAudioGetJobs <- function(wav.dir, api.key, interval = "-1",
         TRANSCRIPT <- rep("",length(out.list))
 
         df <- data.frame(DATE, APIKEY, FILENAME, LANGUAGE, JOBID, TRANSCRIPT stringsAsFactors=FALSE)
-        appendToCSV(file.name, df, append = TRUE, sep=",", row.names=FALSE, col.names=FALSE)
-      }
+        appendToCSV(job.file, df, append = TRUE, sep=",", row.names=FALSE, col.names=FALSE)
     
     if(is.null(error.messages)){ #this needs to be WAY better -Chris
         print(paste("Jobs successfully uploaded,", "'job.file' written to", job.file))
