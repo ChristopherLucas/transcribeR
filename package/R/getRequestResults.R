@@ -10,10 +10,10 @@ getRequestResults <- function(job.id, api.key){
     #   Transcribed text (character)
     # Check status, if queued, return status
     status <- getStatus(job.id, api.key)
-    if(status == 'queued') {
+    if(status != 'finished') {
         return(status)
     }
-    # If not queued, snag that text!
+    # If finished, snag that text!
     url <- "http://api.idolondemand.com/1/job/result/"
     get.url <- paste(url, job.id, "?apikey=", api.key, sep = "")
     call.results = content(GET(get.url))

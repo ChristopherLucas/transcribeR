@@ -11,13 +11,10 @@ retrieveText <- function(job.file, api.key) {
     # If jobs csv has already been through retrieveText,
     # it will have a 'transcribed.text' column. Only get the
     # jobs that were in queue when last called.
-    if('transcribed.text' %in% colnames(jobs)){
-        jobs$transcribed.text <- as.character(jobs$transcribed.text)
-        untranscribed.inds <- which(jobs$transcribed.text == 'queued')
-        job.IDs <- jobs$jobIDs[untranscribed.inds] # IDs in queue at last call
-    } else {
-        job.IDs <- jobs$jobIDs
-    }
+    jobs$TRANSCRIPT <- as.character(jobs$TRANSCRIPT)
+    untranscribed.inds <- which(jobs$TRANSCRIPT == 'queued' || jobs$TRANSCRIPT == '')
+    job.IDs <- jobs$JOBID[untranscribed.inds] # IDs in queue at last call
+
     # holder vec for new transcriptions
     transcribed.text <- c()
     # try to transcribe all job.IDs
@@ -29,7 +26,7 @@ retrieveText <- function(job.file, api.key) {
     # through retrieveText(), replace appropriate cells.
     # Else, create new column.
     if('transcribed.text' %in% colnames(jobs)){
-        jobs[untranscribed.inds,which(colnames(jobs) == 'transcribed.text')] <- transcribed.text
+        jobs[untranscribed.inds,"TRANSCRIPT"] <- transcribed.text
     } else {
         jobs$transcribed.text <- transcribed.text
     }    
