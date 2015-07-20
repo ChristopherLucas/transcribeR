@@ -1,6 +1,6 @@
 sendAudioGetJobs <- function(wav.dir, api.key, interval = "-1",
                       encode = "multipart", job.file,
-                      language = "en-US"){
+                      language = "en-US", verbose = FALSE){
     # Main user function to POST to HP IDOL Speech Recognition
     # API and write jobs to job.file (a filename)
     #    
