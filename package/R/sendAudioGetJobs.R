@@ -67,11 +67,14 @@ sendAudioGetJobs <- function(wav.dir, api.key, interval = "-1",
             name.in.list <- sub("(.*\\/)([^.]+)(\\.[[:alnum:]]+$)", "\\2", fn)
             out.list[[name.in.list]] <- content(attempt)
           }
-        NAMES <- names(out.list)
-        jobIDs <- unname(unlist(lapply(out.list, function(x) x[['jobID']])))
-        lang <- rep(language, length(out.list))
+        DATE <- rep(Sys.Date,length(out.list))
+        APIKEY <- rep(api.key,length(out.list))
+        FILENAME <- names(out.list)
+        LANGUAGE <- rep(language, length(out.list))
+        JOBID <- unname(unlist(lapply(out.list, function(x) x[['jobID']])))
+        TRANSCRIPT <- rep("",length(out.list))
 
-        df <- data.frame(NAMES, jobIDs, lang, stringsAsFactors=FALSE)
+        df <- data.frame(DATE, APIKEY, FILENAME, LANGUAGE, JOBID, TRANSCRIPT stringsAsFactors=FALSE)
         appendToCSV(file.name, df, append = TRUE, sep=",", row.names=FALSE, col.names=FALSE)
       }
     

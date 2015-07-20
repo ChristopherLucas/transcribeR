@@ -25,10 +25,8 @@ retrieveText <- function(job.file, api.key) {
     # add to original dataframe. if dataframe has been
     # through retrieveText(), replace appropriate cells.
     # Else, create new column.
-    if('transcribed.text' %in% colnames(jobs)){
-        jobs[untranscribed.inds,"TRANSCRIPT"] <- transcribed.text
-    } else {
-        jobs$transcribed.text <- transcribed.text
-    }    
+
+    jobs$TRANSCRIPT<- transcribed.text
+    
     return(jobs)
 }
