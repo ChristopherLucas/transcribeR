@@ -14,13 +14,15 @@ retrieveText(job.file, api.key)
   	the CSV file that \code{retrieveText} checks to determine the indices that need transcriptions and then updates
   }
   \item{api.key}{
-  	the API key used to authenticate requests made to HP IDOL OnDemand
+     	the API Key used to authenticate requests to HP IDOL OnDemand; one can be obtained from making an account on HP IDOL OnDemand's website https://www.idolondemand.com/
   }
 }
 \seealso{
 	\code{\link{getRequestResults}}
 }
 \examples{
+\dontrun{
 ## Adds transcripts to a transcribeR CSV
-retrieveText("/home/Desktop/my_transcribeR_csv.csv", "NFE94S87-SOMEAPIKEY-34HEA8")
+retrieveText("/home/Desktop/my_transcribeR_csv.csv", API_KEY)
+}
 }

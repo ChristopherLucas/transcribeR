@@ -1,6 +1,6 @@
 createJobCSV <- function(existing.csv, csv.location, overwrite=FALSE, append=FALSE, sep=",",row.names=FALSE, col.names=FALSE) {
   if (existing.csv != NULL) {
-    warning("The file already exists, and \"overwrite=FALSE\"")
+    warning("An existing file is supplied, so a new one will not be created")
     return(FALSE)
   }
   if (existing.csv == NULL) {
