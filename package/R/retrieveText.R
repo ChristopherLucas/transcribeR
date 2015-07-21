@@ -6,7 +6,7 @@ retrieveText <- function(job.file, api.key) {
     #   api.key: api key for HP IDOL API
     #    
     # Returns:
-    #   Nothing    
+    #    
     jobs <- read.csv(job.file)
     # If jobs csv has already been through retrieveText,
     # it will have a 'transcribed.text' column. Only get the
@@ -19,14 +19,9 @@ retrieveText <- function(job.file, api.key) {
     transcribed.text <- c()
     # try to transcribe all job.IDs
     for(ID in job.IDs){
-        result <- getRequestResults(ID, api.key = api.key)
-        transcribed.text <- c(transcribed.text, result)
+        text <- getRequestResults(ID, api.key = api.key)
+        jobs$TRANSCRIPT[ID] <- text
     }
-    # add to original dataframe. if dataframe has been
-    # through retrieveText(), replace appropriate cells.
-    # Else, create new column.
-
-    jobs$TRANSCRIPT<- transcribed.text
-    
+    write.csv(jobs, file = job.file)
     return(jobs)
 }
