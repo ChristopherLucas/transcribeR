@@ -1,5 +1,5 @@
 sendAudioGetJobs <- function(wav.dir, api.key, interval = "-1",
-                      encode = "multipart", job.file,
+                      encode = "multipart", existing.csv = NULL, csv.location,
                       language = "en-US", verbose = FALSE){
     # Main user function to POST to HP IDOL Speech Recognition
     # API and write jobs to job.file (a filename)
@@ -35,10 +35,10 @@ sendAudioGetJobs <- function(wav.dir, api.key, interval = "-1",
     ex.v[5] <- "JOBID"
     ex.v[6] <- "TRANSCRIPT"
    
-    file.created <- createJobCSV(job.file) # Boolean, TRUE if a file is created
+    file.created <- createJobCSV(existing.csv, csv.location) # Boolean, TRUE if a file is created
     i <- 0 # used for verbose mode
     if(file.created == FALSE){
-      existing.job.csv <- read.csv(job.file)
+      existing.job.csv <- read.csv(existing.csv)
       if(any(colnames(existing.job.csv) != ex.v)){ # Check if the provided file is correctly formatted
         error.messages <- "incorrect csv type"
         stop("This doesn't appear to be a transcribeR jobs.csv, please provide another filename")
@@ -96,7 +96,7 @@ sendAudioGetJobs <- function(wav.dir, api.key, interval = "-1",
         TRANSCRIPT <- rep("",length(out.list))
 
         df <- data.frame(DATE, APIKEY, FILENAME, LANGUAGE, JOBID, TRANSCRIPT stringsAsFactors=FALSE)
-        appendToCSV(job.file, df, append = TRUE, sep=",", row.names=FALSE, col.names=FALSE)
+        appendToCSV(existing.csv, df, append = TRUE, sep=",", row.names=FALSE, col.names=FALSE)
     
     if(is.null(error.messages)){ #this needs to be WAY better -Chris
         print(paste("Jobs successfully uploaded,", "'job.file' written to", job.file))

@@ -1,10 +1,10 @@
-appendToCSV <- function(file.name, row.frame, append = TRUE, sep=",", row.names=FALSE, col.names=FALSE) {
-  if (file.exists(file.name) == FALSE) {
+appendToCSV <- function(existing.csv, row.frame, append = TRUE, sep=",", row.names=FALSE, col.names=FALSE) {
+  if (existing.csv == NULL) {
     warning("The file was not found or path was wrong, \"file.name=" + file.name + "\"")
     return(FALSE)
   }
   write.table(row.frame, 
-              file = file.name,
+              file = existing.csv,
               append=append,
               sep=sep, row.names=row.names, 
               col.names = col.names)
