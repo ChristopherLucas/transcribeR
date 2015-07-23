@@ -96,7 +96,9 @@ The `sendAudioGetJobs` function handles the POST request to the Speech Recogniti
 
 * language (defaults to "en-US") -- the language code used by HP
 
-* verbose (defaults to FALSE) -- displays the uploading progress
+* verbose (defaults to FALSE) -- prints the uploading progress to the user
+
+While it examines all WAV files in wav.dir, it only posts the files that are not also found in an existing CSV.
 
 # The retrieveText() Function
 
