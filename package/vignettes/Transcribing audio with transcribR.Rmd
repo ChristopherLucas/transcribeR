@@ -1,7 +1,7 @@
 ---
 title: "Transcribing Audio with transcribeR"
 author: "Christopher Lucas, Shiv Sunil, Thomas Scanlan"
-date: "`r Sys.Date()`"
+date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Vignette Title}
@@ -30,7 +30,11 @@ The transcribeR package has the following dependencies:
 
 ## Overview
 
-HP IDOL OnDemand's Speech Recognition API is trained to transcribe both audio files and video files of human speech. It can work with both local files and video files The transcription time of the video depends on the length and the segmentation of the video, and it can take anywhere from 0.05 to 0.20 seconds per second of video.
+HP IDOL OnDemand's Speech Recognition API is trained to transcribe both audio files and video files of human speech. It can work with both local audio and video files and video files available from a URL. The transcription time of the video depends on the length and the segmentation of the video, and it can take anywhere from 0.05 to 0.20 seconds per second of video.
+
+## Calling Asynchronous
+
+Because the transcription process takes a nontrivial amount of time to complete, the POST (posting a file to the API) and GET (retrieving the resulting JSON object, the object that contains the status/output) requests cannot be completed simulatneously, so the output isn't immediately available. Instead, HP IDOL OnDemand provides a Job ID for tracking the status of the call, and connection with the API does not need to be maintained. When the call is complete, the status also returns the transcription.
 
 ## API Key
 
@@ -74,3 +78,30 @@ The `transcribeR` package reads and writes CSVs which have the following columns
 
 DATE records the date when the file was posted to the Speech Recognition API. APIKEY records the APIKEY used to make the request. FILENAME is the filepath of the posted file; the `sendAudioGetJobs` function relies on reading the FILENAME field to determine if a file was previously posted so that it will avoid posting it again. LANGUAGE is the associated language code. JOBID is the Job ID returned by the API when the file is posted. TRANSCRIPT is the transcript retrieved from the API once `retrieveText` when the job's status is "finished""; if the job's status is not "finished", then the current status is written to the TRANSCRIPT field. If and only if the TRANSCRIPT field for a file is either `NULL` or a status that isn't "finished", then `retrieveText` will update the field.
 
+# The sendAudioGetJobs() Function
+
+The `sendAudioGetJobs` function handles the POST request to the Speech Recognition API. It accepts the following parameters:
+
+* wav.dir -- the directory in which the WAV files of interest are located
+
+* api.key -- the API Key used to authenticate requests made to HP Idol OnDemand
+
+* interval (defaults to "-1") -- the segmentation interval used by the Speech Recognition API
+
+* encode (defaults to "multipart") -- the format used when posting the file to the Speech Recognition API
+
+* existing.csv (defaults to NULL) -- a CSV that `sendAudioGetJobs` will append to rather than overwrite; if NULL, it will create a new CSV specified by csv.location
+
+* csv.location -- the path of the output file when a new CSV is to be created
+
+* language (defaults to "en-US") -- the language code used by HP
+
+* verbose (defaults to FALSE) -- displays the uploading progress
+
+# The retrieveText() Function
+
+
+
+# Examples
+
+Coming soon!
