@@ -1,9 +1,5 @@
 createJobCSV <- function(existing.csv, csv.location, overwrite=FALSE, append=FALSE, sep=",",row.names=FALSE, col.names=FALSE) {
-  if (existing.csv != NULL) {
-    warning("An existing file is supplied, so a new one will not be created")
-    return(FALSE)
-  }
-  if (existing.csv == NULL) {
+  if (is.null(existing.csv)) {
     ex.df = data.frame()
     ex.v = c(1:6)
     ex.v[1] <- "DATE"
@@ -19,5 +15,9 @@ createJobCSV <- function(existing.csv, csv.location, overwrite=FALSE, append=FAL
                 row.names=row.names, 
                 col.names = col.names)
     return(TRUE)
+  }
+  else {
+    warning("An existing file is supplied, so a new one will not be created")
+    return(FALSE)
   }
 }

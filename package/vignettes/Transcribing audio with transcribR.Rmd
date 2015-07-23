@@ -74,4 +74,3 @@ The `transcribeR` package reads and writes CSVs which have the following columns
 
 DATE records the date when the file was posted to the Speech Recognition API. APIKEY records the APIKEY used to make the request. FILENAME is the filepath of the posted file; the `sendAudioGetJobs` function relies on reading the FILENAME field to determine if a file was previously posted so that it will avoid posting it again. LANGUAGE is the associated language code. JOBID is the Job ID returned by the API when the file is posted. TRANSCRIPT is the transcript retrieved from the API once `retrieveText` when the job's status is "finished""; if the job's status is not "finished", then the current status is written to the TRANSCRIPT field. If and only if the TRANSCRIPT field for a file is either `NULL` or a status that isn't "finished", then `retrieveText` will update the field.
 
-
