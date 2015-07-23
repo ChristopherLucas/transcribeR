@@ -95,7 +95,7 @@ sendAudioGetJobs <- function(wav.dir, api.key, interval = "-1",
         JOBID <- unname(unlist(lapply(out.list, function(x) x[['jobID']])))
         TRANSCRIPT <- rep("",length(out.list))
 
-        df <- data.frame(DATE, APIKEY, FILENAME, LANGUAGE, JOBID, TRANSCRIPT stringsAsFactors=FALSE)
+        df <- data.frame(DATE, APIKEY, FILENAME, LANGUAGE, JOBID, TRANSCRIPT, stringsAsFactors=FALSE)
         appendToCSV(existing.csv, df, append = TRUE, sep=",", row.names=FALSE, col.names=FALSE)
     
     if(is.null(error.messages)){ #this needs to be WAY better -Chris
