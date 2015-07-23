@@ -18,6 +18,7 @@ sendAudioGetJobs <- function(wav.dir, api.key, interval = "-1",
     #   csv to file.
     # Improve this - error messages should collect and return
     # errors in an R-readable way
+  print("1")
     error.messages <- NULL
     url <- "https://api.idolondemand.com/1/api/async/recognizespeech/v1"
     # get all files in wav directory
@@ -26,7 +27,7 @@ sendAudioGetJobs <- function(wav.dir, api.key, interval = "-1",
     total.number.of.files <- length(wav.filenames)
     # holder for content
     out.list <- list()
-    
+  print("2")
     ex.v = c(1:6)
     ex.v[1] <- "DATE"
     ex.v[2] <- "APIKEY"
@@ -59,6 +60,7 @@ sendAudioGetJobs <- function(wav.dir, api.key, interval = "-1",
             name.in.list <- sub("(.*\\/)([^.]+)(\\.[[:alnum:]]+$)", "\\2", fn)
             out.list[[name.in.list]] <- content(attempt)
           }
+          print("3")
           # print out the status of the upload and current filename
           if (verbose) {
              i = i + 1
@@ -88,6 +90,7 @@ sendAudioGetJobs <- function(wav.dir, api.key, interval = "-1",
             }
           }
       }
+  print("4")
         DATE <- rep(Sys.Date,length(out.list))
         APIKEY <- rep(api.key,length(out.list))
         FILENAME <- names(out.list)
@@ -97,7 +100,7 @@ sendAudioGetJobs <- function(wav.dir, api.key, interval = "-1",
 
         df <- data.frame(DATE, APIKEY, FILENAME, LANGUAGE, JOBID, TRANSCRIPT, stringsAsFactors=FALSE)
         appendToCSV(csv.location, df, append = TRUE, sep=",", row.names=FALSE, col.names=FALSE)
-    
+  print("5")
     if(is.null(error.messages)){ #this needs to be WAY better -Chris
         print(paste("Jobs successfully uploaded,", "'job.file' written to", job.file))
     }
