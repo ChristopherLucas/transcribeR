@@ -34,7 +34,7 @@ HP IDOL OnDemand's Speech Recognition API is trained to transcribe both audio fi
 
 ## API Key
 
-In order to use the Speech Recognition API, one must have an API Key. An API Key can be obtained by making an account at [HP IDOL OnDemand's Website](<https://www.idolondemand.com/signup.html>). API Keys are passed as parameers to the functions `sendAudioGetJobs` and `retrieveText`.
+In order to use the Speech Recognition API, one must have an API Key. An API Key can be obtained by making an account at [HP IDOL OnDemand's Website](<https://www.idolondemand.com/signup.html>). API Keys are passed as parameters to the functions `sendAudioGetJobs` and `retrieveText`.
 
 ## Job IDs
 
@@ -57,3 +57,21 @@ HP IDOL OnDemand provides monthly quotas for using its APIs. When a file is post
 * Total Input Bytes (30000 MB Source Data)
 
 # transcribeR CSVs
+
+The `transcribeR` package reads and writes CSVs which have the following columns (in order and verbatim):
+
+* DATE
+
+* APIKEY
+
+* FILENAME
+
+* LANGUAGE
+
+* JOBID
+
+* TRANSCRIPT
+
+DATE records the date when the file was posted to the Speech Recognition API. APIKEY records the APIKEY used to make the request. FILENAME is the filepath of the posted file; the `sendAudioGetJobs` function relies on reading the FILENAME field to determine if a file was previously posted so that it will avoid posting it again. LANGUAGE is the associated language code. JOBID is the Job ID returned by the API when the file is posted. TRANSCRIPT is the transcript retrieved from the API once `retrieveText` when the job's status is "finished""; if the job's status is not "finished", then the current status is written to the TRANSCRIPT field. If and only if the TRANSCRIPT field for a file is either `NULL` or a status that isn't "finished", then `retrieveText` will update the field.
+
+
