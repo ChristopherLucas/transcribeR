@@ -39,7 +39,7 @@ sendAudioGetJobs <- function(wav.dir, api.key, interval = "-1",
     i <- 0 # used for verbose mode
     if(is.file.created == FALSE){
       existing.job.csv <- read.csv(existing.csv)
-      colnames(existing.job.csv)
+      print(colnames(existing.job.csv))
       if(any(colnames(existing.job.csv) != ex.v)){ # Check if the provided file is correctly formatted
         error.messages <- "incorrect csv type"
         stop("This doesn't appear to be a transcribeR jobs.csv, please provide another filename")
