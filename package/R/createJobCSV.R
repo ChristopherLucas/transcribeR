@@ -12,7 +12,7 @@ createJobCSV <- function(existing.csv, csv.location, overwrite=FALSE, append=FAL
     write.table(ex.df,
                 file = csv.location, 
                 append=append, sep=sep, 
-                row.names=row.names, 
+                row.names=FALSE, 
                 col.names = col.names)
     return(TRUE)
   }
