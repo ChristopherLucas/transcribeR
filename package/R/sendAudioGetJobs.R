@@ -101,6 +101,7 @@ sendAudioGetJobs <- function(wav.dir, api.key, interval = "-1",
         TRANSCRIPT <- rep("",length(out.list))
 
         df <- data.frame(DATE, APIKEY, FILENAME, LANGUAGE, JOBID, TRANSCRIPT, stringsAsFactors=FALSE)
+        row.names(df) <- NULL
         appendToCSV(csv.location, df, append = TRUE, sep=",", row.names=FALSE, col.names=FALSE)
     if(is.null(error.messages)){ #this needs to be WAY better -Chris
         print(paste("Jobs successfully uploaded, a transcribeR CSV was written to", csv.location))
