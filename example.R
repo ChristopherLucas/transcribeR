@@ -4,9 +4,9 @@ library(transcribeR)
 
 printLanguages()
 
-sendAudioGetJobs(wav.dir = "/Users/shivsunil/Desktop/Harvard_Research/transcribeR_testing/test_jobs.csv",
+sendAudioGetJobs(wav.dir = "/Users/shivsunil/Desktop/Harvard_Research/transcribeR_testing/",
                  api.key = API_KEY, interval = "-1",
-                 encode = "multipart", existing.csv = "/Users/shivsunil/Desktop/Harvard_Research/transcribeR_testing/test_jobs.csv",
+                 encode = "multipart", existing.csv = NULL,
                  csv.location = "/Users/shivsunil/Desktop/Harvard_Research/transcribeR_testing/test_jobs.csv",
                  language = "en-US", verbose = FALSE)
 
