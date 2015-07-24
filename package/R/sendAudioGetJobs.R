@@ -27,12 +27,12 @@ sendAudioGetJobs <- function(wav.dir, api.key, interval = "-1",
     # holder for content
     out.list <- list()
     ex.v = c(1:6)
-    ex.v[2] <- "DATE"
-    ex.v[3] <- "APIKEY"
-    ex.v[4] <- "FILENAME"
-    ex.v[5] <- "LANGUAGE"
-    ex.v[6] <- "JOBID"
-    ex.v[7] <- "TRANSCRIPT"
+    ex.v[1] <- "DATE"
+    ex.v[2] <- "APIKEY"
+    ex.v[3] <- "FILENAME"
+    ex.v[4] <- "LANGUAGE"
+    ex.v[5] <- "JOBID"
+    ex.v[6] <- "TRANSCRIPT"
    
     is.file.created <- createJobCSV(existing.csv, csv.location) # Boolean, TRUE if a file is created
     print(paste("Is a new file created?",is.file.created))
