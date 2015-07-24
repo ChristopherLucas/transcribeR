@@ -26,8 +26,7 @@ sendAudioGetJobs <- function(wav.dir, api.key, interval = "-1",
     total.number.of.files <- length(wav.filenames)
     # holder for content
     out.list <- list()
-    ex.v = c(1:7)
-    ex.v[1] <- "X"
+    ex.v = c(1:6)
     ex.v[2] <- "DATE"
     ex.v[3] <- "APIKEY"
     ex.v[4] <- "FILENAME"
@@ -36,10 +35,11 @@ sendAudioGetJobs <- function(wav.dir, api.key, interval = "-1",
     ex.v[7] <- "TRANSCRIPT"
    
     is.file.created <- createJobCSV(existing.csv, csv.location) # Boolean, TRUE if a file is created
-    print(is.file.created)
+    print(paste("Is a new file created?",is.file.created))
     i <- 0 # used for verbose mode
     if(is.file.created == FALSE){
       existing.job.csv <- read.csv(existing.csv)
+      print(existing.job.csv)
       print(colnames(existing.job.csv))
       if(any(colnames(existing.job.csv) != ex.v)){ # Check if the provided file is correctly formatted
         error.messages <- "incorrect csv type"
