@@ -6,7 +6,7 @@ appendToCSV <- function(existing.csv, row.frame, append = TRUE, sep=",", row.nam
   write.table(row.frame, 
               file = existing.csv,
               append=append,
-              sep=sep, row.names=row.names, 
-              col.names = col.names)
+              sep=sep, row.names=FALSE, 
+              col.names = FALSE)
   return(TRUE)
 }

@@ -15,7 +15,7 @@ createJobCSV <- function(existing.csv, csv.location, overwrite=FALSE, append=FAL
                 file = csv.location, 
                 append=append, sep=sep, 
                 row.names=FALSE, 
-                col.names = col.names)
+                col.names = FALSE)
     return(TRUE)
   }
   else {
