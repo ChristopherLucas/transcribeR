@@ -10,6 +10,7 @@ createJobCSV <- function(existing.csv, csv.location, overwrite=FALSE, append=FAL
     ex.v[6] <- "TRANSCRIPT"
     ex.df <- rbind(ex.df,ex.v)
     names(ex.df) <- ex.v
+    print(ex.df)
     write.table(ex.df,
                 file = csv.location, 
                 append=append, sep=sep, 
