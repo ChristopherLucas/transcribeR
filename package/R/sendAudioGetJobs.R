@@ -72,7 +72,6 @@ sendAudioGetJobs <- function(wav.dir, api.key, interval = "-1",
       }
       else { # a new file was created
         for(fn in wav.filenames){
-          print(fn)
             attempt <- POST(
               url,
               body = list(
@@ -92,8 +91,7 @@ sendAudioGetJobs <- function(wav.dir, api.key, interval = "-1",
             }
           }
       }
-    print(length(out.list))
-        DATE <- rep(Sys.Date,length(out.list))
+        DATE <- rep(Sys.Date(),length(out.list))
         APIKEY <- rep(api.key,length(out.list))
         FILENAME <- names(out.list)
         LANGUAGE <- rep(language, length(out.list))
