@@ -102,7 +102,9 @@ sendAudioGetJobs <- function(wav.dir, api.key, interval = "-1",
         appendToCSV(csv.location, df, append = TRUE, sep=",", row.names=FALSE, col.names=FALSE)
   print("5")
     if(is.null(error.messages)){ #this needs to be WAY better -Chris
-        print(paste("Jobs successfully uploaded,", "'job.file' written to", job.file))
+        # i changed this from its previous version because job.file did not exist..
+        # also I really don't understand why we are using a variable name in a print statement. - Thomas
+        print(paste("Jobs successfully uploaded,", " written to ", csv.location))
     }
     else {
       print("Error in uploading jobs and/or collecting job IDs.")
