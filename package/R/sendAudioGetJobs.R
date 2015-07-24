@@ -35,6 +35,7 @@ sendAudioGetJobs <- function(wav.dir, api.key, interval = "-1",
     ex.v[6] <- "TRANSCRIPT"
    
     is.file.created <- createJobCSV(existing.csv, csv.location) # Boolean, TRUE if a file is created
+    print(is.file.created)
     i <- 0 # used for verbose mode
     if(is.file.created == FALSE){
       existing.job.csv <- read.csv(existing.csv)
@@ -71,6 +72,7 @@ sendAudioGetJobs <- function(wav.dir, api.key, interval = "-1",
       }
       else { # a new file was created
         for(fn in wav.filenames){
+          print(fn)
             attempt <- POST(
               url,
               body = list(
