@@ -103,7 +103,7 @@ sendAudioGetJobs <- function(wav.dir, api.key, interval = "-1",
         df <- data.frame(DATE, APIKEY, FILENAME, LANGUAGE, JOBID, TRANSCRIPT, stringsAsFactors=FALSE)
         appendToCSV(csv.location, df, append = TRUE, sep=",", row.names=FALSE, col.names=FALSE)
     if(is.null(error.messages)){ #this needs to be WAY better -Chris
-        print(paste("Jobs successfully uploaded, a transcribeR was written to", csv.location))
+        print(paste("Jobs successfully uploaded, a transcribeR CSV was written to", csv.location))
     }
     else {
       print("Error in uploading jobs and/or collecting job IDs.")
