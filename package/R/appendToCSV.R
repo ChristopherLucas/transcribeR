@@ -3,6 +3,7 @@ appendToCSV <- function(existing.csv, row.frame, append = TRUE, sep=",", row.nam
     warning("The file was not found or path was wrong, \"file.name=" + file.name + "\"")
     return(FALSE)
   }
+  row.names(row.frame) <- NULL
   write.table(row.frame, 
               file = existing.csv,
               append=append,
