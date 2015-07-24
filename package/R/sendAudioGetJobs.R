@@ -18,7 +18,6 @@ sendAudioGetJobs <- function(wav.dir, api.key, interval = "-1",
     #   csv to file.
     # Improve this - error messages should collect and return
     # errors in an R-readable way
-  print("1")
     error.messages <- NULL
     url <- "https://api.idolondemand.com/1/api/async/recognizespeech/v1"
     # get all files in wav directory
@@ -27,7 +26,6 @@ sendAudioGetJobs <- function(wav.dir, api.key, interval = "-1",
     total.number.of.files <- length(wav.filenames)
     # holder for content
     out.list <- list()
-  print("2")
     ex.v = c(1:6)
     ex.v[1] <- "DATE"
     ex.v[2] <- "APIKEY"
@@ -36,15 +34,18 @@ sendAudioGetJobs <- function(wav.dir, api.key, interval = "-1",
     ex.v[5] <- "JOBID"
     ex.v[6] <- "TRANSCRIPT"
    
-    file.created <- createJobCSV(existing.csv, csv.location) # Boolean, TRUE if a file is created
+    is.file.created <- createJobCSV(existing.csv, csv.location) # Boolean, TRUE if a file is created
     i <- 0 # used for verbose mode
-    if(file.created == FALSE){
+    if(is.file.created == FALSE){
       existing.job.csv <- read.csv(existing.csv)
       if(any(colnames(existing.job.csv) != ex.v)){ # Check if the provided file is correctly formatted
         error.messages <- "incorrect csv type"
         stop("This doesn't appear to be a transcribeR jobs.csv, please provide another filename")
       }
-        for(fn in wav.filenames){
+        for(fpath in wav.filenames){
+          print(fpath)
+          fnlist <- strsplit(fpath,"/",fixed=TRUE)
+          fn <- fnlist[-1]
           if(fn %in% existing.job.csv$FILENAME){} #
           else {
             attempt <- POST(
@@ -60,7 +61,6 @@ sendAudioGetJobs <- function(wav.dir, api.key, interval = "-1",
             name.in.list <- sub("(.*\\/)([^.]+)(\\.[[:alnum:]]+$)", "\\2", fn)
             out.list[[name.in.list]] <- content(attempt)
           }
-          print("3")
           # print out the status of the upload and current filename
           if (verbose) {
              i = i + 1
@@ -90,8 +90,7 @@ sendAudioGetJobs <- function(wav.dir, api.key, interval = "-1",
             }
           }
       }
-  print("4")
-        DATE <- rep(Sys.Date(),length(out.list))
+        DATE <- rep(Sys.Date,length(out.list))
         APIKEY <- rep(api.key,length(out.list))
         FILENAME <- names(out.list)
         LANGUAGE <- rep(language, length(out.list))
@@ -100,11 +99,8 @@ sendAudioGetJobs <- function(wav.dir, api.key, interval = "-1",
 
         df <- data.frame(DATE, APIKEY, FILENAME, LANGUAGE, JOBID, TRANSCRIPT, stringsAsFactors=FALSE)
         appendToCSV(csv.location, df, append = TRUE, sep=",", row.names=FALSE, col.names=FALSE)
-  print("5")
     if(is.null(error.messages)){ #this needs to be WAY better -Chris
-        # i changed this from its previous version because job.file did not exist..
-        # also I really don't understand why we are using a variable name in a print statement. - Thomas
-        print(paste("Jobs successfully uploaded,", " written to ", csv.location))
+        print(paste("Jobs successfully uploaded,", "'job.file' written to", job.file))
     }
     else {
       print("Error in uploading jobs and/or collecting job IDs.")
