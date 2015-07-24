@@ -27,9 +27,9 @@ sendAudioGetJobs <- function(wav.dir, api.key, interval = "-1",
     # holder for content
     out.list <- list()
     ex.v = c(1:6)
-    ex.v[3] <- "DATE"
+    ex.v[1] <- "DATE"
     ex.v[2] <- "APIKEY"
-    ex.v[1] <- "FILENAME"
+    ex.v[3] <- "FILENAME"
     ex.v[4] <- "LANGUAGE"
     ex.v[5] <- "JOBID"
     ex.v[6] <- "TRANSCRIPT"
