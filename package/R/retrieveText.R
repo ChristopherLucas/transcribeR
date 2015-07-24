@@ -22,6 +22,6 @@ retrieveText <- function(job.file, api.key) {
         text <- getRequestResults(ID, api.key = api.key)
         jobs$TRANSCRIPT[ID] <- text
     }
-    write.csv(jobs, file = job.file)
+    write.csv(jobs, file = job.file, row.names = FALSE)
     return(jobs)
 }
