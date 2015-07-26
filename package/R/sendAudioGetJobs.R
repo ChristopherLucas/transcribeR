@@ -87,7 +87,7 @@ sendAudioGetJobs <- function(wav.dir, api.key, interval = "-1",
             }
         }
     }
-    DATE <- rep(Sys.Date(),length(out.list))
+    DATE <- as.character(rep(Sys.Date(),length(out.list)))
     APIKEY <- rep(api.key,length(out.list))
     FILENAME <- names(out.list)
     LANGUAGE <- rep(language, length(out.list))
