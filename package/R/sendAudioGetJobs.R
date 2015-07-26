@@ -49,9 +49,8 @@ sendAudioGetJobs <- function(wav.dir, api.key, interval = "-1",
           print(fpath)
           fnlist <- strsplit(fpath,"/",fixed=TRUE)
           fn <- fnlist[-1]
-          if(fn %in% existing.job.csv$FILENAME){} #
-          else {
-            attempt <- POST(
+          if(!(fn %in% existing.job.csv$FILENAME)){
+              attempt <- POST(
               url,
               body = list(
                 file = upload_file(fn),
@@ -63,7 +62,7 @@ sendAudioGetJobs <- function(wav.dir, api.key, interval = "-1",
             stop_for_status(attempt)
             name.in.list <- sub("(.*\\/)([^.]+)(\\.[[:alnum:]]+$)", "\\2", fn)
             out.list[[name.in.list]] <- content(attempt)
-          }
+          } #
           # print out the status of the upload and current filename
           if (verbose) {
              i = i + 1
