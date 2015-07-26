@@ -39,15 +39,12 @@ sendAudioGetJobs <- function(wav.dir, api.key, interval = "-1",
     i <- 0 # used for verbose mode
     if(is.file.created == FALSE){
         existing.job.csv <- read.csv(existing.csv)
-        print(existing.job.csv)
-        print(colnames(existing.job.csv))
         if(any(colnames(existing.job.csv) != ex.v)){ # Check if the provided file is correctly formatted
             error.messages <- "incorrect csv type"
             stop("This doesn't appear to be a transcribeR jobs.csv, please provide another filename")
         }
         for(fpath in wav.filenames){
-            fn_vec <- unlist(strsplit(fpath,"/",fixed=TRUE)) # ERROR AREA
-            fn <- fn_vec[length(fn_vec)]
+            fn <- sub("(.*\\/)([^.]+)(\\.[[:alnum:]]+$)", "\\2", fpath)
             if(!(fn %in% existing.job.csv$FILENAME)){
                 attempt <- POST(
                     url,
@@ -59,8 +56,7 @@ sendAudioGetJobs <- function(wav.dir, api.key, interval = "-1",
                         ),
                     encode = encode)
                 stop_for_status(attempt)
-                name.in.list <- sub("(.*\\/)([^.]+)(\\.[[:alnum:]]+$)", "\\2", fpath)
-                out.list[[name.in.list]] <- content(attempt)
+                out.list[[fn]] <- content(attempt)
             } #
             # print out the status of the upload and current filename
             if (verbose) {
@@ -72,6 +68,7 @@ sendAudioGetJobs <- function(wav.dir, api.key, interval = "-1",
     }
     else { # a new file was created
         for(fpath in wav.filenames){
+            fn <- sub("(.*\\/)([^.]+)(\\.[[:alnum:]]+$)", "\\2", fpath)
             attempt <- POST(
                 url,
                 body = list(
@@ -82,8 +79,7 @@ sendAudioGetJobs <- function(wav.dir, api.key, interval = "-1",
                     ),
                 encode = encode)
             stop_for_status(attempt)
-            name.in.list <- sub("(.*\\/)([^.]+)(\\.[[:alnum:]]+$)", "\\2", fpath)
-            out.list[[name.in.list]] <- content(attempt)
+            out.list[[fn]] <- content(attempt)
             if (verbose) {
                 i = i + 1
                 print(paste("Current Upload: ", fn, sep = ""))
