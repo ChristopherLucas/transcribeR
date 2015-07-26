@@ -4,14 +4,29 @@ library(transcribeR)
 
 printLanguages()
 
-sendAudioGetJobs(wav.dir = "/Users/shivsunil/Desktop/Harvard_Research/transcribeR_testing/",
+sendAudioGetJobs(wav.dir = WAV_DIR,
                  api.key = API_KEY, interval = "-1",
                  encode = "multipart", existing.csv = NULL,
-                 csv.location = "/Users/shivsunil/Desktop/Harvard_Research/transcribeR_testing/test_jobs.csv",
+                 csv.location = CSV_LOCATION,
                  language = "en-US", verbose = FALSE)
 
 
-retrieveText(job.file = "/Users/shivsunil/Desktop/Harvard_Research/transcribeR_testing/test_jobs.csv",
+retrieveText(job.file = CSV_LOCATION,
                api.key = API_KEY)
 
 print("Done!")
+Sys.sleep(1)
+print("But wait! There's more!")
+
+# existing.csv changes
+sendAudioGetJobs(wav.dir = WAV_DIR,
+                 api.key = API_KEY, interval = "-1",
+                 encode = "multipart", existing.csv = CSV_LOCATION,
+                 csv.location = CSV_LOCATION,
+                 language = "en-US", verbose = FALSE)
+
+
+retrieveText(job.file = CSV_LOCATION,
+             api.key = API_KEY)
+
+print("Now done!")
