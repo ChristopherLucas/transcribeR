@@ -1,6 +1,6 @@
 sendAudioGetJobs <- function(wav.dir, api.key, interval = "-1",
-                      encode = "multipart", existing.csv = NULL, csv.location,
-                      language = "en-US", verbose = FALSE){
+                             encode = "multipart", existing.csv = NULL, csv.location,
+                             language = "en-US", verbose = FALSE){
     # Main user function to POST to HP IDOL Speech Recognition
     # API and write jobs to job.file (a filename)
     #    
@@ -33,81 +33,80 @@ sendAudioGetJobs <- function(wav.dir, api.key, interval = "-1",
     ex.v[4] <- "LANGUAGE"
     ex.v[5] <- "JOBID"
     ex.v[6] <- "TRANSCRIPT"
-   
+    
     is.file.created <- createJobCSV(existing.csv, csv.location) # Boolean, TRUE if a file is created
     print(paste("Is a new file created?",is.file.created))
     i <- 0 # used for verbose mode
     if(is.file.created == FALSE){
-      existing.job.csv <- read.csv(existing.csv)
-      print(existing.job.csv)
-      print(colnames(existing.job.csv))
-      if(any(colnames(existing.job.csv) != ex.v)){ # Check if the provided file is correctly formatted
-        error.messages <- "incorrect csv type"
-        stop("This doesn't appear to be a transcribeR jobs.csv, please provide another filename")
-      }
-        for(fpath in wav.filenames){
-          print(fpath)
-          fn_vec <- unlist(strsplit(fpath,"/",fixed=TRUE)) # ERROR AREA
-          fn <- fn_vec[length(fn_vec)]
-          if(!(fn %in% existing.job.csv$FILENAME)){
-              attempt <- POST(
-              url,
-              body = list(
-                file = upload_file(fpath),
-                apikey = api.key,
-                language = language, 
-                interval = interval
-              ),
-              encode = encode)
-            stop_for_status(attempt)
-            name.in.list <- sub("(.*\\/)([^.]+)(\\.[[:alnum:]]+$)", "\\2", fn)
-            out.list[[name.in.list]] <- content(attempt)
-          } #
-          # print out the status of the upload and current filename
-          if (verbose) {
-             i = i + 1
-             print(paste("Current Upload: ", fn, sep = ""))
-             print(paste("Current % of all audio uploaded: ", round(i / total.number.of.files * 100, 4), "%", sep = ""))
-          }
+        existing.job.csv <- read.csv(existing.csv)
+        print(existing.job.csv)
+        print(colnames(existing.job.csv))
+        if(any(colnames(existing.job.csv) != ex.v)){ # Check if the provided file is correctly formatted
+            error.messages <- "incorrect csv type"
+            stop("This doesn't appear to be a transcribeR jobs.csv, please provide another filename")
         }
-      }
-      else { # a new file was created
+        for(fpath in wav.filenames){
+            fn_vec <- unlist(strsplit(fpath,"/",fixed=TRUE)) # ERROR AREA
+            fn <- fn_vec[length(fn_vec)]
+            if(!(fn %in% existing.job.csv$FILENAME)){
+                attempt <- POST(
+                    url,
+                    body = list(
+                        file = upload_file(fpath),
+                        apikey = api.key,
+                        language = language, 
+                        interval = interval
+                        ),
+                    encode = encode)
+                stop_for_status(attempt)
+                name.in.list <- sub("(.*\\/)([^.]+)(\\.[[:alnum:]]+$)", "\\2", fpath)
+                out.list[[name.in.list]] <- content(attempt)
+            } #
+            # print out the status of the upload and current filename
+            if (verbose) {
+                i = i + 1
+                print(paste("Current Upload: ", fn, sep = ""))
+                print(paste("Current % of all audio uploaded: ", round(i / total.number.of.files * 100, 4), "%", sep = ""))
+            }
+        }
+    }
+    else { # a new file was created
         for(fpath in wav.filenames){
             attempt <- POST(
-              url,
-              body = list(
-                file = upload_file(fpath),
-                apikey = api.key,
-                language = language,
-                interval = interval
-              ),
-              encode = encode)
+                url,
+                body = list(
+                    file = upload_file(fpath),
+                    apikey = api.key,
+                    language = language,
+                    interval = interval
+                    ),
+                encode = encode)
             stop_for_status(attempt)
-            name.in.list <- sub("(.*\\/)([^.]+)(\\.[[:alnum:]]+$)", "\\2", fn)
+            name.in.list <- sub("(.*\\/)([^.]+)(\\.[[:alnum:]]+$)", "\\2", fpath)
             out.list[[name.in.list]] <- content(attempt)
             if (verbose) {
-              i = i + 1
-              print(paste("Current Upload: ", fn, sep = ""))
-              print(paste("Current % of all audio uploaded: ", round(i / total.number.of.files * 100, 4), "%", sep = ""))
+                i = i + 1
+                print(paste("Current Upload: ", fn, sep = ""))
+                print(paste("Current % of all audio uploaded: ", round(i / total.number.of.files * 100, 4), "%", sep = ""))
             }
-          }
-      }
-        DATE <- rep(Sys.Date(),length(out.list))
-        APIKEY <- rep(api.key,length(out.list))
-        FILENAME <- names(out.list)
-        LANGUAGE <- rep(language, length(out.list))
-        JOBID <- unname(unlist(lapply(out.list, function(x) x[['jobID']])))
-        TRANSCRIPT <- rep("",length(out.list))
-
-        df <- data.frame(DATE, APIKEY, FILENAME, LANGUAGE, JOBID, TRANSCRIPT, stringsAsFactors=FALSE)
-        row.names(df) <- NULL
+        }
+    }
+    DATE <- rep(Sys.Date(),length(out.list))
+    APIKEY <- rep(api.key,length(out.list))
+    FILENAME <- names(out.list)
+    LANGUAGE <- rep(language, length(out.list))
+    JOBID <- unname(unlist(lapply(out.list, function(x) x[['jobID']])))
+    TRANSCRIPT <- rep("",length(out.list))
+    
+    df <- data.frame(DATE, APIKEY, FILENAME, LANGUAGE, JOBID, TRANSCRIPT, stringsAsFactors=FALSE)
+    row.names(df) <- NULL
     print(df)
-        appendToCSV(csv.location, df, append = TRUE, sep=",", row.names=FALSE, col.names=FALSE)
+    appendToCSV(csv.location, df, append = TRUE, sep=",", row.names=FALSE, col.names=FALSE)
     if(is.null(error.messages)){ #this needs to be WAY better -Chris
         print(paste("Jobs successfully uploaded, a transcribeR CSV was written to", csv.location))
     }
     else {
-      print("Error in uploading jobs and/or collecting job IDs.")
-      print(error.messages)
+        print("Error in uploading jobs and/or collecting job IDs.")
+        print(error.messages)
     }
 }
