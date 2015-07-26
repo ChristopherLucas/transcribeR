@@ -1,3 +1,6 @@
+install.packages("BBmisc")
+library(BBmisc)
+
 sendAudioGetJobs <- function(wav.dir, api.key, interval = "-1",
                       encode = "multipart", existing.csv = NULL, csv.location,
                       language = "en-US", verbose = FALSE){
@@ -46,10 +49,8 @@ sendAudioGetJobs <- function(wav.dir, api.key, interval = "-1",
         stop("This doesn't appear to be a transcribeR jobs.csv, please provide another filename")
       }
         for(fpath in wav.filenames){
-          print(fpath)
           fnlist <- strsplit(fpath,"/",fixed=TRUE)
-          print(fnlist)
-          fn <- fnlist[-1]
+          fn <- getLast(fnlist)
           print(fn)
           if(!(fn %in% existing.job.csv$FILENAME)){
               attempt <- POST(
