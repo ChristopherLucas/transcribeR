@@ -1,5 +1,4 @@
-install.packages("BBmisc")
-library(BBmisc)
+
 
 sendAudioGetJobs <- function(wav.dir, api.key, interval = "-1",
                       encode = "multipart", existing.csv = NULL, csv.location,
