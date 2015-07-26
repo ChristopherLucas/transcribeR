@@ -72,7 +72,7 @@ sendAudioGetJobs <- function(wav.dir, api.key, interval = "-1",
         }
       }
       else { # a new file was created
-        for(fn in wav.filenames){
+        for(fpath in wav.filenames){
             attempt <- POST(
               url,
               body = list(
