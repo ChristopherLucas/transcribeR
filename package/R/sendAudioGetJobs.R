@@ -49,6 +49,7 @@ sendAudioGetJobs <- function(wav.dir, api.key, interval = "-1",
           print(fpath)
           fnlist <- strsplit(fpath,"/",fixed=TRUE)
           fn <- fnlist[-1]
+          print(fn)
           if(!(fn %in% existing.job.csv$FILENAME)){
               attempt <- POST(
               url,
