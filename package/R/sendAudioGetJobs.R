@@ -48,8 +48,8 @@ sendAudioGetJobs <- function(wav.dir, api.key, interval = "-1",
         stop("This doesn't appear to be a transcribeR jobs.csv, please provide another filename")
       }
         for(fpath in wav.filenames){
-          fnlist <- strsplit(fpath,"/",fixed=TRUE)
-          fn <- getLast(fnlist)
+          fn_vec <- unlist(strsplit(fpath,"/",fixed=TRUE)) # ERROR AREA
+          fn <- fn_vec[length(fn_vec)]
           print(fn)
           if(!(fn %in% existing.job.csv$FILENAME)){
               attempt <- POST(

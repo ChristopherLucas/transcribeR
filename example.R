@@ -1,8 +1,7 @@
 library(devtools)
 install_github('ChristopherLucas/transcribeR/package')
 library(transcribeR)
-install.packages("BBmisc")
-library(BBmisc)
+
 
 printLanguages()
 
