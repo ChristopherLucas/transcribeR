@@ -12,7 +12,7 @@ retrieveText <- function(job.file, api.key) {
     # it will have a 'transcribed.text' column. Only get the
     # jobs that were in queue when last called.
     jobs$TRANSCRIPT <- as.character(jobs$TRANSCRIPT)
-    untranscribed.inds <- which(jobs$TRANSCRIPT == 'queued' | jobs$TRANSCRIPT == '' | is.na(jobs$TRANSCRIPT))
+    untranscribed.inds <- which(jobs$TRANSCRIPT == 'queued' | jobs$TRANSCRIPT == '' | is.na(jobs$TRANSCRIPT) | is.null(jobs$TRANSCRIPT))
     job.IDs <- jobs$JOBID[untranscribed.inds] # IDs in queue at last call
 
     # holder vec for new transcriptions
