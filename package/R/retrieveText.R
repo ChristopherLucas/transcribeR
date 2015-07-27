@@ -13,14 +13,13 @@ retrieveText <- function(job.file, api.key) {
     # jobs that were in queue when last called.
     jobs$TRANSCRIPT <- as.character(jobs$TRANSCRIPT)
     untranscribed.inds <- which(jobs$TRANSCRIPT == 'queued' | jobs$TRANSCRIPT == '' | is.na(jobs$TRANSCRIPT) | is.null(jobs$TRANSCRIPT))
-    job.IDs <- jobs$JOBID[untranscribed.inds] # IDs in queue at last call
-
-    # holder vec for new transcriptions
-    transcribed.text <- c()
-    # try to transcribe all job.IDs
-    for(ID in job.IDs){
-        text <- getRequestResults(ID, api.key = api.key)
-        jobs$TRANSCRIPT[ID] <- text
+    
+    # try to transcribe all job.IDs 
+    for(ind in untranscribed.inds){
+        ID <- jobs$JOBID[ind]
+        text <- getRequestResults(ID, api.key = api.key)        
+        print(ID)
+        jobs$TRANSCRIPT[ind] <- text
     }
     write.csv(jobs, file = job.file, row.names = FALSE)
     return(jobs)
