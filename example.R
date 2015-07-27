@@ -1,9 +1,11 @@
-library(devtools)
-install_github('ChristopherLucas/transcribeR/package')
+
 library(transcribeR)
 
+print("First, printing language codes.")
 
 printLanguages()
+
+print("Now posting requests to HP IDOL OnDemand's Speech Recognition API.")
 
 sendAudioGetJobs(wav.dir = WAV_DIR,
                  api.key = API_KEY, interval = "-1",
@@ -13,9 +15,9 @@ sendAudioGetJobs(wav.dir = WAV_DIR,
 
 print("Waiting before requesting transcriptions.")
 
-Sys.sleep(20)
+Sys.sleep(20) # Adequate delay to allow the Speech Recognition API to compute the most probable transcription.
 
 retrieveText(job.file = CSV_LOCATION,
                api.key = API_KEY)
 
-print("Now done!")
+print("Done!")

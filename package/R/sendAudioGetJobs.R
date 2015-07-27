@@ -16,8 +16,7 @@ sendAudioGetJobs <- function(wav.dir, api.key, interval = "-1",
     # Returns:
     #   Message indicating success, automatically writes jobs
     #   csv to file.
-    # Improve this - error messages should collect and return
-    # errors in an R-readable way
+
     error.messages <- NULL
     url <- "https://api.idolondemand.com/1/api/async/recognizespeech/v1"
     # get all files in wav directory
@@ -97,7 +96,7 @@ sendAudioGetJobs <- function(wav.dir, api.key, interval = "-1",
     df <- data.frame(DATE, APIKEY, FILENAME, LANGUAGE, JOBID, TRANSCRIPT, stringsAsFactors=FALSE)
     row.names(df) <- NULL
     appendToCSV(csv.location, df, append = TRUE, sep=",", row.names=FALSE, col.names=FALSE)
-    if(is.null(error.messages)){ #this needs to be WAY better -Chris
+    if(is.null(error.messages)){
         print(paste("Jobs successfully uploaded, a transcribeR CSV was written to", csv.location))
     }
     else {

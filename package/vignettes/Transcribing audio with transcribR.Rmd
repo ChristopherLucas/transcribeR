@@ -92,18 +92,49 @@ The `sendAudioGetJobs` function handles the POST request to the Speech Recogniti
 
 * existing.csv (defaults to NULL) -- a CSV that `sendAudioGetJobs` will append to rather than overwrite; if NULL, it will create a new CSV specified by csv.location
 
-* csv.location -- the path of the output file when a new CSV is to be created
+* csv.location -- the path of the output file to be used when a new CSV is created
 
 * language (defaults to "en-US") -- the language code used by HP
 
-* verbose (defaults to FALSE) -- prints the uploading progress to the user
+* verbose (defaults to FALSE) -- when TRUE, prints the uploading progress to the user
 
-While it examines all WAV files in wav.dir, it only posts the files that are not also found in an existing CSV.
+While it examines all WAV files in wav.dir, it only posts the files that are not also found in the existing CSV by checking the FILENAME column for the filename. The function itself returns nothing.
 
 # The retrieveText() Function
 
+The `retrieveText` function updates the TRANSCRIPT field in a transcribeR with the results currently held by the Speech Recognition API. It currently checks for rows whose TRANSCRIPT field is one of the following: 'queued', NA, or NULL, and then uses the Job IDs corresponding to those rows to retrieve the transcripts from the Speech Recognition API. It accepts the following parameters:
 
+* job.file -- the transcribeR CSV that will be examined
+
+* api.key -- the API Key used to authenticate requests made to HP Idol OnDemand
+
+The function itself returns the updated data frame corresponding to the Job CSV.
 
 # Examples
 
-Coming soon!
+From the included example.R file:
+
+```R
+library(transcribeR)
+
+print("First, printing language codes.")
+
+printLanguages()
+
+print("Now posting requests to HP IDOL OnDemand's Speech Recognition API.")
+
+sendAudioGetJobs(wav.dir = WAV_DIR,
+                 api.key = API_KEY, interval = "-1",
+                 encode = "multipart", existing.csv = NULL,
+                 csv.location = CSV_LOCATION,
+                 language = "en-US", verbose = TRUE)
+
+print("Waiting before requesting transcriptions.")
+
+Sys.sleep(20) # Adequate delay to allow the Speech Recognition API to compute the most probable transcription.
+
+retrieveText(job.file = CSV_LOCATION,
+               api.key = API_KEY)
+
+print("Done!")
+```
