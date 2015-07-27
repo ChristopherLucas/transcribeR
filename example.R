@@ -15,8 +15,8 @@ sendAudioGetJobs(wav.dir = WAV_DIR,
 retrieveText(job.file = CSV_LOCATION,
                api.key = API_KEY)
 
-print("Done!")
-Sys.sleep(1)
+print("Done with making a new transcribeR CSV and posting jobs!")
+Sys.sleep(20)
 print("But wait! There's more!")
 
 # existing.csv changes
