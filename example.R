@@ -9,7 +9,7 @@ sendAudioGetJobs(wav.dir = WAV_DIR,
                  api.key = API_KEY, interval = "-1",
                  encode = "multipart", existing.csv = NULL,
                  csv.location = CSV_LOCATION,
-                 language = "en-US", verbose = FALSE)
+                 language = "en-US", verbose = TRUE)
 
 
 retrieveText(job.file = CSV_LOCATION,
@@ -24,7 +24,7 @@ sendAudioGetJobs(wav.dir = WAV_DIR,
                  api.key = API_KEY, interval = "-1",
                  encode = "multipart", existing.csv = CSV_LOCATION,
                  csv.location = CSV_LOCATION,
-                 language = "en-US", verbose = FALSE)
+                 language = "en-US", verbose = TRUE)
 
 
 retrieveText(job.file = CSV_LOCATION,
