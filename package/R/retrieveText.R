@@ -11,7 +11,6 @@ retrieveText <- function(job.file, api.key) {
     # If jobs csv has already been through retrieveText,
     # it will have a 'transcribed.text' column. Only get the
     # jobs that were in queue when last called.
-    #jobs$TRANSCRIPT <- as.character(jobs$TRANSCRIPT)
     untranscribed.inds <- which(jobs$TRANSCRIPT == 'queued' | jobs$TRANSCRIPT == '' | is.na(jobs$TRANSCRIPT) | is.null(jobs$TRANSCRIPT))
     
     # try to transcribe all job.IDs 
