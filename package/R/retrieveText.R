@@ -17,7 +17,6 @@ retrieveText <- function(job.file, api.key) {
     for(ind in untranscribed.inds){
         ID <- jobs$JOBID[ind]
         text <- getRequestResults(ID, api.key = api.key)        
-        print(ID)
         jobs$TRANSCRIPT[ind] <- text
     }
     write.csv(jobs, file = job.file, row.names = FALSE)
