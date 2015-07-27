@@ -11,6 +11,8 @@ sendAudioGetJobs(wav.dir = WAV_DIR,
                  csv.location = CSV_LOCATION,
                  language = "en-US", verbose = TRUE)
 
+print("Waiting before requesting transcriptions.")
+
 Sys.sleep(20)
 
 retrieveText(job.file = CSV_LOCATION,
