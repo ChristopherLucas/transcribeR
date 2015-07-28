@@ -12,6 +12,36 @@ vignette: >
 
 This vignette demonstrates how to use the transcribeR package in R. The transcribeR package is built to request and receive transcriptions from HP IDOL OnDemand's Speech Recognition API.
 
+# Table of Contents
+
+[Introduction](#introduction)
+
+  [Overview](#overview)
+  
+  [Dependencies](#dependencies)
+  
+[HP IDOL OnDemand's Speech Recognition API](#hp-idol-ondemand's-speech-recognition-api)
+  
+  [Calling Asynchronous](#calling-asynchronous)
+  
+  [API Key](#api-key)
+  
+  [Job IDs](#job-ids)
+  
+  [Language Codes](#language-codes)
+  
+  [Segmentation](#segmentation)
+  
+  [Usage Quotas](#usage-quotas)
+  
+[transcribeR CSVs](#transcriber-csvs)
+
+[The sendAudioGetJobs Function](#the-sendaudiogetjobs-function)
+
+[The retrieveText Function](#the-retrievetext-function)
+
+[Examples](#examples)
+
 # Introduction
 
 ## Overview
@@ -27,8 +57,6 @@ The transcribeR package has the following dependencies:
 * HP IDOL OnDemand Speech Recognition API Key
 
 # HP IDOL OnDemand's Speech Recognition API
-
-## Overview
 
 HP IDOL OnDemand's Speech Recognition API is trained to transcribe both audio files and video files of human speech. It can work with both local audio and video files and video files available from a URL. The transcription time of the video depends on the length and the segmentation of the video, and it can take anywhere from 0.05 to 0.20 seconds per second of video.
 
