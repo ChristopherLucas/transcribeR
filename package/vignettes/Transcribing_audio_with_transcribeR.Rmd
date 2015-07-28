@@ -10,7 +10,7 @@ vignette: >
 ---
 # Abstract
 
-This vignette demonstrates how to use the transcribeR package in R. The transcribeR package is built to request and receive transcriptions from HP IDOL OnDemand's Speech Recognition API.
+This vignette demonstrates how to use the transcribeR package in R. The transcribeR package is built to request and receive transcriptions from HP IDOL OnDemand's Speech Recognition API. The package is easy to use with the related R package [stm](<http://structuraltopicmodel.com/>) for the estimation of audio and video topic models.
 
 # Table of Contents
 
@@ -46,15 +46,16 @@ This vignette demonstrates how to use the transcribeR package in R. The transcri
 
 ## Overview
 
-The transcribeR package allows a user to send all WAV files in a specified directory to HP IDOL OnDemand's Speech Recognition API by using the `sendAudioGetJobs` function. The same function stores a list of the Job IDs returned by HP into a CSV file. Once all the WAV files are posted to HP, the transcripts can be extracted with the `retrieveText` function and stored in the same CSV.
+As poltiicians and other speakers more frequently turn to YouTube and other video-sharing websites to both convey their messages to millions around the world and archive their speeches, valuable data for topic modeling and emotional analyses to social scientists and historians are being locked away in traditionally intractible audio and video formats. The transcribeR package not only provides convenient access to the HP IDOL OnDemand's Speech Recognition API, but it also allows for audio and video files to be processed en masse, with all input and output organized into one file for user convenience. The transcribeR package allows a user to send all WAV files in a specified directory to HP IDOL OnDemand's Speech Recognition API by using the `sendAudioGetJobs` function. The same function stores a list of the Job IDs returned by HP into a CSV file. Once all the WAV files are posted to HP, the transcripts can be extracted with the `retrieveText` function and stored in the same CSV. Hence, only one CSV is necessary to contain all information about the audio files and their transcripts, eliminating potential confusion and alignment errors that could arise from storing the filename, job ID, and transcripts in separate files.
 
 ## Dependencies
 
-The transcribeR package has the following dependencies:
+The transcribeR package has the following easy-to-obtain dependencies:
 
 * httr (R package)
 
 * HP IDOL OnDemand Speech Recognition API Key
+
 
 # HP IDOL OnDemand's Speech Recognition API
 
@@ -62,7 +63,7 @@ HP IDOL OnDemand's Speech Recognition API is trained to transcribe both audio fi
 
 ## Calling Asynchronous
 
-Because the transcription process takes a nontrivial amount of time to complete, the POST (posting a file to the API) and GET (retrieving the resulting JSON object, the object that contains the status/output) requests cannot be completed simulatneously, so the output isn't immediately available. Instead, HP IDOL OnDemand provides a Job ID for tracking the status of the call, and connection with the API does not need to be maintained. When the call is complete, the status also returns the transcription.
+Because the transcription process takes a nontrivial amount of time to complete, the POST (posting a file to the API) and GET (retrieving the resulting JSON object, the object that contains the status/output) requests cannot be completed simulatneously, so the output isn't immediately available. Instead, HP IDOL OnDemand provides a Job ID for tracking the status of the call, and connection with the API does not need to be maintained. When the call is complete, the "finished" status also provides the transcription.
 
 ## API Key
 
@@ -89,6 +90,8 @@ HP IDOL OnDemand provides monthly quotas for using its APIs. When a file is post
 * Total Input Bytes (30000 MB Source Data)
 
 # transcribeR CSVs
+
+The `transcribeR` package uses CSVs to store all data because R can easily read a CSV to make a data frame and write to a CSV from a data frame. Within the CSV, six columns are used to store the values associated with each file that `transcribeR` processes. By storing the filename in the CSV, `transcribeR` can read that file name determine if that file was ever successfully posted to the Speech Recognition API. And pairing the file name and job ID as two entries in the same row of a CSV allows the user to clearly determine which file corresponds to which request made to the API. The resulting transcript from the API is stored in the Transcript field of the same row. With this arrangement, the user can easily determine the input and output at each stage of using the API.
 
 The `transcribeR` package reads and writes CSVs which have the following columns (in order and verbatim):
 
