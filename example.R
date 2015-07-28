@@ -12,17 +12,42 @@ printLanguages()
 
 print("Now posting requests to HP IDOL OnDemand's Speech Recognition API.")
 
-sendAudioGetJobs(wav.dir = WAV_DIR,
-                 api.key = API_KEY, interval = "-1",
-                 encode = "multipart", existing.csv = NULL,
-                 csv.location = CSV_LOCATION,
-                 language = "en-US", verbose = TRUE)
+num.files.uploaded = sendAudioGetJobs(wav.dir = WAV_DIR,
+                                       api.key = API_KEY,
+                                       interval = "-1",             # Transcript will not be segmented
+                                       encode = "multipart",
+                                       existing.csv = NULL,         # Intended to create a new CSV
+                                       csv.location = CSV_LOCATION,
+                                       language = "en-US",          # As printed above, one of the language codes
+                                       verbose = TRUE)              # Prints out uploading progress to the user
+
+print(paste("The number of files uploaded was",num.files.uploaded))
+
+Sys.sleep(1)
 
 print("Waiting before requesting transcriptions.")
 
 Sys.sleep(20) # Adequate delay to allow the Speech Recognition API to compute the most probable transcription.
 
 retrieveText(job.file = CSV_LOCATION,
-               api.key = API_KEY)
+             api.key = API_KEY)
+
+num.files.uploaded = sendAudioGetJobs(wav.dir = WAV_DIR,
+                                      api.key = API_KEY,
+                                      interval = "-1",             # Transcript will not be segmented
+                                      encode = "multipart",
+                                      existing.csv = CSV_LOCATION,         # Intended to create a new CSV
+                                      csv.location = CSV_LOCATION,
+                                      language = "en-US",          # As printed above, one of the language codes
+                                      verbose = TRUE)              # Prints out uploading progress to the user
+
+print(paste("The number of files uploaded this time was",num.files.uploaded))
+
+print("Waiting again before requesting transcriptions.")
+
+Sys.sleep(10) # Adequate delay to allow the Speech Recognition API to compute the most probable transcription.
+
+retrieveText(job.file = CSV_LOCATION,
+             api.key = API_KEY)
 
 print("Done!")

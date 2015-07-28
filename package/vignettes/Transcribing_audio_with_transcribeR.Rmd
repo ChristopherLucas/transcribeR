@@ -129,7 +129,7 @@ The `sendAudioGetJobs` function handles the POST request to the Speech Recogniti
 
 * verbose (defaults to FALSE) -- when TRUE, prints the uploading progress to the user
 
-While it examines all WAV files in wav.dir, it only posts the files that are not also found in the existing CSV by checking the FILENAME column for the filename. The function itself returns nothing.
+While it examines all WAV files in wav.dir, it only posts the files that are not also found in the existing CSV by checking the FILENAME column for the filename. The function itself returns the number of files that were uploaded in the instance it was called.
 
 # The retrieveText() Function
 
