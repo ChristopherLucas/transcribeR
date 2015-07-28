@@ -22,7 +22,7 @@ sendAudioGetJobs <- function(wav.dir, api.key, interval = "-1",
     url <- "https://api.idolondemand.com/1/api/async/recognizespeech/v1"
     # get all files in wav directory
     wav.dir <- gsub('/?$', '/', wav.dir) # add trailing '/' if missing
-    wav.filenames <- Sys.glob(paste(wav.dir,'*(.wav|.mp4)', sep = ''))
+    wav.filenames <- Sys.glob(paste(wav.dir,'*.(wav|mp4)', sep = ''))
     total.number.of.files <- length(wav.filenames)
     # holder for content
     out.list <- list()
@@ -102,13 +102,12 @@ sendAudioGetJobs <- function(wav.dir, api.key, interval = "-1",
     row.names(df) <- NULL
     appendToCSV(csv.location, df, append = TRUE, sep=",", row.names=FALSE, col.names=FALSE)
    
-#   return(num.files.uploaded)
-#    if(is.null(error.messages)){
-#       print(paste("Jobs successfully uploaded, a transcribeR CSV was written to", csv.location))
-#    }
-#    else {
-#       print("Error in uploading jobs and/or collecting job IDs.")
-#       print(error.messages)
-#    }
-
+    if(is.null(error.messages)){
+       print(paste("Jobs successfully uploaded, a transcribeR CSV was written to", csv.location))
+       print(paste("The number of files uploaded was", num.files.uploaded))
+    }
+    else {
+       print("Error in uploading jobs and/or collecting job IDs.")
+       print(error.messages)
+    }
 }
