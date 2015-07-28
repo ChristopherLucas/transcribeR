@@ -12,7 +12,7 @@ printLanguages()
 
 print("Now posting requests to HP IDOL OnDemand's Speech Recognition API.")
 
-num.files.uploaded = sendAudioGetJobs(wav.dir = WAV_DIR,
+num.files.uploaded <- sendAudioGetJobs(wav.dir = wav.dir,
                                        api.key = API_KEY,
                                        interval = "-1",             # Transcript will not be segmented
                                        encode = "multipart",
@@ -32,7 +32,7 @@ Sys.sleep(20) # Adequate delay to allow the Speech Recognition API to compute th
 retrieveText(job.file = CSV_LOCATION,
              api.key = API_KEY)
 
-num.files.uploaded = sendAudioGetJobs(wav.dir = WAV_DIR,
+num.files.uploaded = sendAudioGetJobs(wav.dir = wav.dir,
                                       api.key = API_KEY,
                                       interval = "-1",             # Transcript will not be segmented
                                       encode = "multipart",
