@@ -2,6 +2,9 @@ fnames <- c('boxer.wav', 'merkley.wav', 'warren.wav')
 urls <- paste("http://christopherlucas.org/transcribeR/", fnames, sep = '')
 lapply(urls, function(x) download.file(x, destfile = basename(x)))
 
+library(devtools)
+install_github('ChristopherLucas/transcribeR/package')
+
 wav.dir <- getwd()
 
 library(transcribeR)
