@@ -45,7 +45,7 @@ print(paste("The number of files uploaded this time was",num.files.uploaded))
 
 print("Waiting again before requesting transcriptions.")
 
-Sys.sleep(10) # Adequate delay to allow the Speech Recognition API to compute the most probable transcription.
+Sys.sleep(20) # Adequate delay to allow the Speech Recognition API to compute the most probable transcription.
 
 retrieveText(job.file = CSV_LOCATION,
              api.key = API_KEY)
