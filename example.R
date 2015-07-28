@@ -15,7 +15,7 @@ printLanguages()
 
 print("Now posting requests to HP IDOL OnDemand's Speech Recognition API.")
 
-sendAudioGetJobs(wav.dir = wav.dir,
+sendAudioGetJobs(wav.dir = WAV_DIR,
                  api.key = API_KEY,
                  interval = "-1",             # Transcript will not be segmented
                  encode = "multipart",
@@ -33,16 +33,14 @@ Sys.sleep(20) # Adequate delay to allow the Speech Recognition API to compute th
 retrieveText(job.file = CSV_LOCATION,
              api.key = API_KEY)
 
-num.files.uploaded = sendAudioGetJobs(wav.dir = wav.dir,
-                                      api.key = API_KEY,
-                                      interval = "-1",             # Transcript will not be segmented
-                                      encode = "multipart",
-                                      existing.csv = CSV_LOCATION,         # Intended to create a new CSV
-                                      csv.location = CSV_LOCATION,
-                                      language = "en-US",          # As printed above, one of the language codes
-                                      verbose = TRUE)              # Prints out uploading progress to the user
-
-print(paste("The number of files uploaded this time was",num.files.uploaded))
+sendAudioGetJobs(wav.dir = WAV_DIR,
+                 api.key = API_KEY,
+                 interval = "-1",             # Transcript will not be segmented
+                 encode = "multipart",
+                 existing.csv = CSV_LOCATION,         # Intended to create a new CSV
+                 csv.location = CSV_LOCATION,
+                 language = "en-US",          # As printed above, one of the language codes
+                 verbose = TRUE)              # Prints out uploading progress to the user
 
 Sys.sleep(20) # Adequate delay to allow the Speech Recognition API to compute the most probable transcription.
 
