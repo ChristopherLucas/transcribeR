@@ -2,9 +2,6 @@ fnames <- c('boxer.wav', 'merkley.wav', 'warren.wav')
 urls <- paste("http://christopherlucas.org/transcribeR/", fnames, sep = '')
 lapply(urls, function(x) download.file(x, destfile = basename(x)))
 
-library(devtools)
-install_github('ChristopherLucas/transcribeR/package')
-
 WAV_DIR <- getwd()
 
 library(transcribeR)
@@ -28,7 +25,7 @@ Sys.sleep(1)
 
 print("Waiting before requesting transcriptions.")
 
-Sys.sleep(10) # Adequate delay to allow the Speech Recognition API to compute the most probable transcription.
+Sys.sleep(20) # Adequate delay to allow the Speech Recognition API to compute the most probable transcription.
 
 retrieveText(job.file = CSV_LOCATION,
              api.key = API_KEY)
@@ -42,7 +39,7 @@ sendAudioGetJobs(wav.dir = WAV_DIR,
                  language = "en-US",          # As printed above, one of the language codes
                  verbose = TRUE)              # Prints out uploading progress to the user
 
-Sys.sleep(10) # Adequate delay to allow the Speech Recognition API to compute the most probable transcription.
+Sys.sleep(20) # Adequate delay to allow the Speech Recognition API to compute the most probable transcription.
 
 retrieveText(job.file = CSV_LOCATION,
              api.key = API_KEY)

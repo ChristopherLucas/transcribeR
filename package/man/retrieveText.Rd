@@ -20,6 +20,6 @@ retrieveText(job.file, api.key)
 \examples{
 \dontrun{
 ## Adds transcripts to a transcribeR CSV
-retrieveText("/home/Desktop/my_transcribeR_csv.csv", API_KEY)
+retrieveText(CSV_LOCATION, API_KEY)
 }
 }

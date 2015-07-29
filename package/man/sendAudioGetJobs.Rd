@@ -40,8 +40,8 @@ sendAudioGetJobs(wav.dir, api.key, interval = "-1",
 \examples{
 \dontrun{
 ## Reads files from the specified directory and creates a new CSV at the specified path
-sendAudioGetJobs(wav.dir = "/home/Desktop/Folder_with_WAV_files/",
+sendAudioGetJobs(wav.dir = WAV_DIR,
                  API_KEY",
-                 csv.location = "/home/Desktop/my_transcribeR/csv.csv")
+                 csv.location = CSV_LOCATION)
 }
 }
