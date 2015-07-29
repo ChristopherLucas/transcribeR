@@ -32,6 +32,8 @@ Sys.sleep(20) # Adequate delay to allow the Speech Recognition API to compute th
 retrieveText(job.file = CSV_LOCATION,
              api.key = API_KEY)
 
+print("Transcripts were requested.")
+
 print("What if another file is added to the directory?") # Runs again with a newly added file
 
 Sys.sleep(3)
@@ -57,5 +59,7 @@ Sys.sleep(10) # Adequate delay to allow the Speech Recognition API to compute th
 
 retrieveText(job.file = CSV_LOCATION,
              api.key = API_KEY)
+
+print("Transcripts were requested.")
 
 print("Done!")
