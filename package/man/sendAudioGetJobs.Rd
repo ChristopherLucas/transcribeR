@@ -40,6 +40,13 @@ sendAudioGetJobs(wav.dir, api.key, interval = "-1",
 \examples{
 \dontrun{
 ## Reads files from the specified directory and creates a new CSV at the specified path
+
+fnames <- c('boxer.wav', 'merkley.wav') # Example with 2 files
+urls <- paste("http://christopherlucas.org/transcribeR/", fnames, sep = '')
+lapply(urls, function(x) download.file(x, destfile = basename(x)))
+
+WAV_DIR <- getwd()
+
 sendAudioGetJobs(wav.dir = WAV_DIR,
                  API_KEY",
                  csv.location = CSV_LOCATION)
