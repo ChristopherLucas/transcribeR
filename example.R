@@ -1,4 +1,4 @@
-fnames <- c('boxer.wav', 'merkley.wav', 'warren.wav')
+fnames <- c('boxer.wav', 'merkley.wav')
 urls <- paste("http://christopherlucas.org/transcribeR/", fnames, sep = '')
 lapply(urls, function(x) download.file(x, destfile = basename(x)))
 
@@ -29,6 +29,10 @@ Sys.sleep(20) # Adequate delay to allow the Speech Recognition API to compute th
 
 retrieveText(job.file = CSV_LOCATION,
              api.key = API_KEY)
+
+url <- "http://christopherlucas.org/transcribeR/warren.wav"
+download.file(url, destfile = basename(url))
+WAV_DIR <- getwd()
 
 sendAudioGetJobs(wav.dir = WAV_DIR,
                  api.key = API_KEY,
