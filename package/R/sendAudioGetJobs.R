@@ -35,7 +35,8 @@ sendAudioGetJobs <- function(wav.dir, api.key, interval = "-1",
     
     is.file.created <- createJobCSV(existing.csv, csv.location) # Boolean, TRUE if a file is created
     print(paste("Is a new file created?",is.file.created))
-    i <- 0 # used for verbose mode
+    i <- 0 # used for counting uploaded files
+    x <- 0 # used for verbose mode
     if(is.file.created == FALSE){
         existing.job.csv <- read.csv(existing.csv)
         if(any(colnames(existing.job.csv) != ex.v)){ # Check if the provided file is correctly formatted
@@ -60,8 +61,9 @@ sendAudioGetJobs <- function(wav.dir, api.key, interval = "-1",
             } #
             # print out the status of the upload and current filename
             if (verbose) {
+                x = x + 1
                 print(paste("Current Upload: ", fn, sep = ""))
-                print(paste("Current % of all audio uploaded: ", round(i / total.number.of.files * 100, 4), "%", sep = ""))
+                print(paste("Current % of all audio uploaded: ", round(x / total.number.of.files * 100, 4), "%", sep = ""))
             }
         }
     }
@@ -81,8 +83,9 @@ sendAudioGetJobs <- function(wav.dir, api.key, interval = "-1",
             out.list[[fn]] <- content(attempt)
             i = i + 1
             if (verbose) {
+                x = x + 1
                 print(paste("Current Upload: ", fn, sep = ""))
-                print(paste("Current % of all audio uploaded: ", round(i / total.number.of.files * 100, 4), "%", sep = ""))
+                print(paste("Current % of all audio uploaded: ", round(x / total.number.of.files * 100, 4), "%", sep = ""))
             }
         }
     }

@@ -1,4 +1,4 @@
-fnames <- c('boxer.wav', 'merkley.wav')
+fnames <- c('boxer.wav', 'merkley.wav') # Example with 2 files
 urls <- paste("http://christopherlucas.org/transcribeR/", fnames, sep = '')
 lapply(urls, function(x) download.file(x, destfile = basename(x)))
 
