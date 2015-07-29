@@ -10,6 +10,8 @@ print("First, printing language codes.")
 
 printLanguages()
 
+Sys.sleep(3)
+
 print("Now posting requests to HP IDOL OnDemand's Speech Recognition API.")
 
 sendAudioGetJobs(wav.dir = WAV_DIR,
@@ -21,7 +23,7 @@ sendAudioGetJobs(wav.dir = WAV_DIR,
                  language = "en-US",          # As printed above, one of the language codes
                  verbose = TRUE)              # Prints out uploading progress to the user
 
-Sys.sleep(1)
+Sys.sleep(3)
 
 print("Waiting before requesting transcriptions.")
 
@@ -29,6 +31,10 @@ Sys.sleep(20) # Adequate delay to allow the Speech Recognition API to compute th
 
 retrieveText(job.file = CSV_LOCATION,
              api.key = API_KEY)
+
+print("What if another file is added to the directory?") # Runs again with a newly added file
+
+Sys.sleep(3)
 
 url <- "http://christopherlucas.org/transcribeR/warren.wav"
 download.file(url, destfile = basename(url))
@@ -43,7 +49,11 @@ sendAudioGetJobs(wav.dir = WAV_DIR,
                  language = "en-US",          # As printed above, one of the language codes
                  verbose = TRUE)              # Prints out uploading progress to the user
 
-Sys.sleep(20) # Adequate delay to allow the Speech Recognition API to compute the most probable transcription.
+Sys.sleep(3)
+
+print("Waiting before requesting transcriptions.")
+
+Sys.sleep(10) # Adequate delay to allow the Speech Recognition API to compute the most probable transcription.
 
 retrieveText(job.file = CSV_LOCATION,
              api.key = API_KEY)
