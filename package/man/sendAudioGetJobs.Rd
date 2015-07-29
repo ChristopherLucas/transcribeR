@@ -22,7 +22,7 @@ sendAudioGetJobs(wav.dir, api.key, interval = "-1",
     	optional argument; specifies segmentation length for transcripts in milliseconds; -1 indicates no segmentation and 0 indicates segmentation by words; default is "-1"
   }
     \item{encode}{
-    	optional argument; passed directly to \code{\link[POST]{POST}}; defaults to "multipart"
+    	optional argument; passed directly to \code{POST} in the \code{httr} package; defaults to "multipart"
   }
     \item{existing.csv}{
     	optional argument; specifies CSV to post; defaults to NULL
@@ -40,6 +40,8 @@ sendAudioGetJobs(wav.dir, api.key, interval = "-1",
 \examples{
 \dontrun{
 ## Reads files from the specified directory and creates a new CSV at the specified path
-sendAudioGetJobs(wav.dir = "/home/Desktop/Folder_with_WAV_files/", API_KEY", csv.location = "/home/Desktop/my_transcribeR/csv.csv")
+sendAudioGetJobs(wav.dir = "/home/Desktop/Folder_with_WAV_files/",
+                 API_KEY",
+                 csv.location = "/home/Desktop/my_transcribeR/csv.csv")
 }
 }

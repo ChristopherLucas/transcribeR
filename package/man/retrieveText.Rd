@@ -17,9 +17,6 @@ retrieveText(job.file, api.key)
      	the API Key used to authenticate requests to HP IDOL OnDemand; one can be obtained from making an account on HP IDOL OnDemand's website https://www.idolondemand.com/
   }
 }
-\seealso{
-	\code{\link{getRequestResults}}
-}
 \examples{
 \dontrun{
 ## Adds transcripts to a transcribeR CSV
