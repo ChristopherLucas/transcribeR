@@ -16,13 +16,12 @@ sendAudioGetJobs <- function(wav.dir, api.key, interval = "-1",
     # Returns:
     #   Message indicating success, automatically writes jobs
     #   csv to file.
-   num.files.uploaded <- 0
 
     error.messages <- NULL
     url <- "https://api.idolondemand.com/1/api/async/recognizespeech/v1"
     # get all files in wav directory
     wav.dir <- gsub('/?$', '/', wav.dir) # add trailing '/' if missing
-    wav.filenames <- Sys.glob(paste(wav.dir,'*.wav', sep = ''))
+    wav.filenames <- Sys.glob(c(paste(wav.dir,'*.wav', sep = ''),paste(wav.dir,'*.mp4', sep = '')))
     total.number.of.files <- length(wav.filenames)
     # holder for content
     out.list <- list()
@@ -45,7 +44,6 @@ sendAudioGetJobs <- function(wav.dir, api.key, interval = "-1",
         }
         for(fpath in wav.filenames){
             fn <- sub("(.*\\/)([^.]+)(\\.[[:alnum:]]+$)", "\\2", fpath)
-            print(fn)
             if(!(fn %in% existing.job.csv$FILENAME)){
                 attempt <- POST(
                     url,
@@ -58,11 +56,10 @@ sendAudioGetJobs <- function(wav.dir, api.key, interval = "-1",
                     encode = encode)
                 stop_for_status(attempt)
                 out.list[[fn]] <- content(attempt)
-                num.files.uploaded = num.files.uploaded + 1
+                i = i + 1
             } #
             # print out the status of the upload and current filename
             if (verbose) {
-                i = i + 1
                 print(paste("Current Upload: ", fn, sep = ""))
                 print(paste("Current % of all audio uploaded: ", round(i / total.number.of.files * 100, 4), "%", sep = ""))
             }
@@ -71,7 +68,6 @@ sendAudioGetJobs <- function(wav.dir, api.key, interval = "-1",
     else { # a new file was created
         for(fpath in wav.filenames){
             fn <- sub("(.*\\/)([^.]+)(\\.[[:alnum:]]+$)", "\\2", fpath)
-            
             attempt <- POST(
                 url,
                 body = list(
@@ -83,9 +79,8 @@ sendAudioGetJobs <- function(wav.dir, api.key, interval = "-1",
                 encode = encode)
             stop_for_status(attempt)
             out.list[[fn]] <- content(attempt)
-            num.files.uploaded = num.files.uploaded + 1
+            i = i + 1
             if (verbose) {
-                i = i + 1
                 print(paste("Current Upload: ", fn, sep = ""))
                 print(paste("Current % of all audio uploaded: ", round(i / total.number.of.files * 100, 4), "%", sep = ""))
             }
@@ -104,7 +99,7 @@ sendAudioGetJobs <- function(wav.dir, api.key, interval = "-1",
    
     if(is.null(error.messages)){
        print(paste("Jobs successfully uploaded, a transcribeR CSV was written to", csv.location))
-       print(paste("The number of files uploaded was", num.files.uploaded))
+       print(paste("The number of files uploaded was", i))
     }
     else {
        print("Error in uploading jobs and/or collecting job IDs.")
