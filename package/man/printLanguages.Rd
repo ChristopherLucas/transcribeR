@@ -9,10 +9,6 @@ Prints the language codes used by HP IDOL OnDemand's Speech Recognition API. The
 \usage{
 printLanguages()
 }
-\arguments{
-  \item{}{
-  }
-}
 
 \examples{
 ## Prints the language codes used by HP IDOL OnDemand's Speech Recognition API.
