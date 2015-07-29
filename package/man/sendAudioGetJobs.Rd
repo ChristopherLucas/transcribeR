@@ -4,7 +4,7 @@
 Posts to HP IDOL OnDemand Speech Recognition API and Store the Resulting Job ID
 }
 \description{
-Main user function to POST to HP IDOL OnDemand Speech Recognition API and write Job ID to a transcribeR CSV (a filename). It posts all WAV files in the provided directory. It avoids posting any file that has already been posted according to the transcribeR CSV.
+Main user function to POST to HP IDOL OnDemand Speech Recognition API and write Job ID to a transcribeR CSV, a filename. It posts all WAV files in the provided directory. It avoids posting any file that has already been posted according to the transcribeR CSV.
 }
 \usage{
 sendAudioGetJobs(wav.dir, api.key, interval = "-1",
