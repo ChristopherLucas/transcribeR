@@ -21,7 +21,9 @@ sendAudioGetJobs <- function(wav.dir, api.key, interval = "-1",
     url <- "https://api.idolondemand.com/1/api/async/recognizespeech/v1"
     # get all files in wav directory
     wav.dir <- gsub('/?$', '/', wav.dir) # add trailing '/' if missing
-    wav.filenames <- Sys.glob(c(paste(wav.dir,'*.wav', sep = ''),paste(wav.dir,'*.mp4', sep = '')))
+    wav.filenames <- Sys.glob(c(paste(wav.dir,'*.wav', sep = ''),paste(wav.dir,'*.mp4', sep = ''),
+                                paste(wav.dir,'*.mp3', sep = ''),paste(wav.dir,'*.wma', sep = ''),
+                                paste(wav.dir,'*.wav', sep = ''),paste(wav.dir,'*.wav', sep = '')))
     total.number.of.files <- length(wav.filenames)
     # holder for content
     out.list <- list()
