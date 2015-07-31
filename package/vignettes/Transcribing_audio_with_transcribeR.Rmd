@@ -46,7 +46,7 @@ This vignette demonstrates how to use the transcribeR package in R. The transcri
 
 ## Overview
 
-As politicians and other speakers more frequently turn to YouTube and other video-sharing websites to both convey their messages to millions around the world and digitally archive their speeches, valuable data for topic modeling and emotional analyses to social scientists and historians are being locked away in traditionally intractible audio and video formats. The transcribeR package not only provides convenient access to HP IDOL OnDemand's Speech Recognition API, but it also allows for audio and video files to be processed en masse, with all input and output organized into one file for user convenience. The transcribeR package allows a user to send all files in a specified directory to HP IDOL OnDemand's Speech Recognition API by using the `sendAudioGetJobs` function. The same function stores a list of the Job IDs returned by HP into a CSV file. Once all the files are posted to HP, the transcripts can be extracted with the `retrieveText` function and stored in the same CSV. Hence, only one CSV is necessary to contain all information about the audio files and their transcripts, eliminating potential confusion and alignment errors that could arise from storing the filename, job ID, and transcripts in separate files.
+Politicians and other speakers increasingly turn to YouTube and other video-sharing websites to both convey their messages to millions around the world and digitally archive their speeches. As a consequence, valuable data to social scientists and historians are being locked away in traditionally intractable audio and video formats. The transcribeR package provides convenient access to HP IDOL OnDemand's Speech Recognition API and allows for audio and video files to be processed en masse, with all input and output organized into one file. The transcribeR package allows users to send all the files in a specified directory to HP IDOL OnDemand's Speech Recognition API by using the `sendAudioGetJobs` function. The same function stores a list of the Job IDs returned by HP into a CSV file. Once all the files are posted to HP, the transcripts can be extracted with the `retrieveText` function and stored in the same CSV. Hence, all of the information about the audio files and their transcripts is stored in one CSV, eliminating potential confusion and alignment errors that could arise from storing the filename, job ID, and transcripts in separate files.
 
 ## Dependencies
 
@@ -56,16 +56,16 @@ The transcribeR package has the following easy-to-obtain dependencies:
 
 * HP IDOL OnDemand Speech Recognition API Key
 
-In addition, transcribeR currently
+In addition, transcribeR currently supports uploading the following file formats: WAV, MP3, MP4, WMA.
 
 
 # HP IDOL OnDemand's Speech Recognition API
 
-HP IDOL OnDemand's Speech Recognition API is trained to transcribe both audio files and video files of human speech. It can work with both local audio and video files and video files available from a URL. The transcription time of the video depends on the length and the segmentation of the video, and it can take anywhere from 0.05 to 0.20 seconds per second of video.
+HP IDOL OnDemand's Speech Recognition API is trained to transcribe both audio and video files of human speech. It can work with both local audio and video files as well as video files available from a URL. The transcription time of the video depends on the length and the segmentation of the video, and it can take anywhere from 0.05 to 0.20 seconds per second of video.
 
 ## Calling Asynchronous
 
-Because the transcription process takes a nontrivial amount of time to complete, the POST (posting a file to the API) and GET (retrieving the resulting JSON object, the object that contains the status/output) requests cannot be completed simulatneously, so the output isn't immediately available. Instead, HP IDOL OnDemand provides a Job ID for tracking the status of the call, and connection with the API does not need to be maintained. When the call is complete, the "finished" status also provides the transcription.
+The two requests required for calling the API are POST and GET. POST posts a file to the API and GET retrieves the resulting JSON object, which contains the status and output. Because the transcription process takes a nontrivial amount of time to complete, the requests cannot be completed simultaneously, so the output isn't immediately available. Instead, HP IDOL OnDemand provides a Job ID for tracking the status of the call, and connection with the API does not need to be maintained. When the call is complete, the JSON object has the "finished" status and the transcription.
 
 ## API Key
 
@@ -73,19 +73,19 @@ In order to use the Speech Recognition API, one must have an API Key. An API Key
 
 ## Job IDs
 
-The Speech Recognition API keeps track of requests by assigning each one a Job ID, so as long as the request has a Job ID, then the job status and transcript could be retrieved at any time. The transcribeR package not only uses Job IDs to retrieve the status, but the function `sendAudioGetJobs` checks to see if a file already has a Job ID on the transcribeR CSV. If it finds one, then it avoids posting the file to HP to minimize upload time and usage.
+The Speech Recognition API keeps track of requests by assigning each one a Job ID. Users can retrieve the job status and transcript at any time via the Job ID. The transcribeR package not only uses Job IDs to retrieve the status, but the function `sendAudioGetJobs` checks to see if a file already has a Job ID on the transcribeR CSV. If it finds one, it avoids posting the file to HP to minimize upload time and API Key usage.
 
 ## Language Codes
 
-When posting to the Speech Recognition API, a language code must be specified. The default in `sendAudioGetJobs` is "en-US", but other languages may be specified. In order to examine which languages are supported, the `printLanguages` function can be utilized to list all the language codes to the user.
+When posting to the Speech Recognition API, a language code must be specified. The default in `sendAudioGetJobs` is "en-US" to indicate American English, but other languages can be specified instead. In order to examine which languages are supported, the `printLanguages` function can be called to list all the language codes to the user.
 
 ## Segmentation
 
-A parameter in `sendAudioGetJobs` named `interval` specifies segmentation length for transcripts in milliseconds. Specifying segment length risks segmenting the audio during an utterance or spoken word. An argument of -1 indicates that the entire file should be transcribed at once (hence no segmentation), and an argument 0 indicates segmentation by each word, which are determined by periods of silence. Because specifying a segmentation length could split utterances and not periods of silence,  it is not recommended to specify a positive segmentation length. Because the transcription process relies on context to determine additional probability, it is also not recommended to set the `interval` parameter to zero. This is why -1 is the default value for `interval`.
+The `interval` parameter in `sendAudioGetJobs` specifies segmentation length for transcripts in milliseconds. Specifying segment length risks segmenting the audio during an utterance or spoken word. An argument of -1 indicates that the entire file should be transcribed at once (hence no segmentation), and an argument 0 indicates segmentation by each word, which are determined by periods of silence. Because specifying a segmentation length could split utterances and not periods of silence,  it is not recommended to specify a positive segmentation length. Because the transcription process relies on context to determine additional probability, it is also not recommended to set the `interval` parameter to zero. This is why -1 is the default value for `interval`.
 
 ## Usage Quotas
 
-HP IDOL OnDemand provides monthly quotas for using its APIs. When a file is posted to the Speech Recognition API, HP IDOL OnDemand subtracts a call and the data of the audio file from its monthly quota. The quotas can be found at <https://www.idolondemand.com/account/quotas.html>. Some relevant ones as of July 22, 2015 are listed below:
+HP IDOL OnDemand provides monthly quotas for using its APIs. When a file is posted to the Speech Recognition API, HP IDOL OnDemand subtracts a call and the data of the audio file from its monthly quota. The quotas can be found at <https://www.idolondemand.com/account/quotas.html>. The relevant ones as of July 22, 2015 are listed below:
 
 * Monthly API Calls (50000)
 
@@ -97,19 +97,17 @@ The `transcribeR` package uses CSVs to store all data because R can easily read 
 
 The `transcribeR` package reads and writes CSVs which have the following columns (in order and verbatim):
 
-* DATE
+* DATE - the date when the file was posted to the Speech Recognition API.
 
-* APIKEY
+* APIKEY - the APIKEY used to make the request.
 
-* FILENAME
+* FILENAME - the filepath of the posted file; the `sendAudioGetJobs` function relies on reading the FILENAME field to determine if a file was previously posted so that it will avoid posting it again.
 
-* LANGUAGE
+* LANGUAGE - the associated HP language code
 
-* JOBID
+* JOBID - the Job ID returned by the API when the file is posted
 
-* TRANSCRIPT
-
-DATE records the date when the file was posted to the Speech Recognition API. APIKEY records the APIKEY used to make the request. FILENAME is the filepath of the posted file; the `sendAudioGetJobs` function relies on reading the FILENAME field to determine if a file was previously posted so that it will avoid posting it again. LANGUAGE is the associated language code. JOBID is the Job ID returned by the API when the file is posted. TRANSCRIPT is the transcript retrieved from the API once `retrieveText` when the job's status is "finished""; if the job's status is not "finished", then the current status is written to the TRANSCRIPT field. If and only if the TRANSCRIPT field for a file is either `NULL` or a status that isn't "finished", then `retrieveText` will update the field.
+* TRANSCRIPT - the transcript retrieved from the API once `retrieveText` when the job's status is "finished""; if the job's status is not "finished", then the current status is written to the TRANSCRIPT field. If and only if the TRANSCRIPT field for a file is either `NULL` or a status that isn't "finished", then `retrieveText` will update the field.
 
 # The sendAudioGetJobs() Function
 

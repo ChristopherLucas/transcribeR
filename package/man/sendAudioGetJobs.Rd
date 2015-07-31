@@ -46,7 +46,7 @@ When two files share the same basename but are different file formats, only one 
 
 fnames <- c('boxer.wav', 'merkley.wav') # Example with 2 files
 urls <- paste("http://christopherlucas.org/transcribeR/", fnames, sep = '')
-lapply(urls, function(x) download.file(x, destfile = basename(x)))
+lapply(urls, function(x) download.file(x, destfile = basename(x), mode = 'wb'))
 
 WAV_DIR <- getwd()
 
