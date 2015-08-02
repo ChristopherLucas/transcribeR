@@ -1,6 +1,6 @@
 Package: transcribeR
 Version: 0.0.0
-Date: 2015-07-15
+Date: 2015-08-02
 Type: Package
 Title: Automated Trancription of Audio Files Through the HP IDOL API
 Author: Christopher Lucas, Dean Knox, Dustin Tingley, Thomas Scanlan, Shiv Sunil, Michael May, Angela Su
