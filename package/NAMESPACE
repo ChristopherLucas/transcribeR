@@ -1,4 +1,5 @@
 importFrom("httr",POST,stop_for_status,content,verbose,upload_file,GET)
+importFrom("utils", "read.csv", "write.csv", "write.table")
 export("retrieveText",
        "sendAudioGetJobs",
        "printLanguages")
