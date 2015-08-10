@@ -5,7 +5,7 @@ Type: Package
 Title: Automated Transcription of Audio Files Through the HP IDOL API
 Author: Christopher Lucas, Dean Knox, Dustin Tingley, Thomas Scanlan, Shiv Sunil, Michael May, Angela Su
 Maintainer: Christopher Lucas <clucas@fas.harvard.edu>
-Description: Transcribes audio to text with the HP IDOL API. Includes functions to upload files, 
+Description: Transcribes audio to text with the HP IDOL Speech Recognition API (more details at https://www.idolondemand.com/developer/apis/recognizespeech#overview). Includes functions to upload files, 
 	     retrieve transcriptions, and monitor jobs. 
 VignetteBuilder: knitr
 Imports: httr
