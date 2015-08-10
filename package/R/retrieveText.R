@@ -9,15 +9,14 @@ retrieveText <- function(job.file, api.key) {
     #    
     jobs <- read.csv(job.file)
     # If jobs csv has already been through retrieveText,
-    # it will have a 'transcribed.text' column. Only get the
-    # jobs that were in queue when last called.
-    untranscribed.inds <- which(jobs$TRANSCRIPT == 'queued' | jobs$TRANSCRIPT == '' | is.na(jobs$TRANSCRIPT) | is.null(jobs$TRANSCRIPT))
+    # it will have a 'transcribed.text' column. Get all
+    # jobs since there is no significant additional API Key usage
     
     # try to transcribe all job.IDs 
-    for(ind in untranscribed.inds){
-        ID <- jobs$JOBID[ind]
+    for(i in 1:nrow(jobs)){
+        ID <- jobs$JOBID[i]
         text <- getRequestResults(ID, api.key = api.key)        
-        jobs$TRANSCRIPT[ind] <- text
+        jobs$TRANSCRIPT[i] <- text
     }
     write.csv(jobs, file = job.file, row.names = FALSE)
     return(jobs)
